@@ -1,0 +1,126 @@
+-- Return empty if dotnet is not installed
+if vim.fn.executable("dotnet") == 0 then return {} end
+
+-- Register razor filetype early so lazy.nvim can trigger on ft = "razor"
+vim.filetype.add({
+  extension = {
+    razor = "razor",
+    cshtml = "razor",
+  },
+})
+
+local common = require("plugins.lsp.common")
+
+-- Settings must go through vim.lsp.config, not through plugin opts
+-- roslyn.setup() only handles plugin-level options (filewatching, broad_search, etc.)
+vim.lsp.config("roslyn", {
+  on_attach = common.on_attach,
+  capabilities = common.capabilities(),
+  -- Build the cmd ourselves so we don't pass any razor extension args (the deprecated
+  -- `extensions` opt). Roslyn 5.8.0+ bundles razor; passing the extension explicitly
+  -- doesn't resolve usings/razor and adds noise, so we just run --stdio.
+  cmd = function(dispatchers, config)
+    local exe = require("roslyn.utils").get_roslyn_lsp_path() or "Microsoft.CodeAnalysis.LanguageServer"
+    return vim.lsp.rpc.start({ exe, "--stdio" }, dispatchers, {
+      cwd = config.cmd_cwd,
+      env = config.cmd_env,
+      detached = config.detached,
+    })
+  end,
+  settings = {
+    ["csharp|completion"] = {
+      dotnet_provide_regex_completions = false,
+      dotnet_show_completion_items_from_unimported_namespaces = true,
+      dotnet_show_name_completion_suggestions = true,
+    },
+    ["csharp|formatting"] = {
+      dotnet_organize_imports_on_format = true,
+    },
+    ["csharp|auto_insert"] = {
+      dotnet_enable_auto_insert = true,
+    },
+    ["csharp|symbol_search"] = {
+      dotnet_search_reference_assemblies = true,
+    },
+    ["csharp|quick_info"] = {
+      dotnet_show_remarks_in_quick_info = true,
+    },
+    ["csharp|highlighting"] = {
+      dotnet_highlight_related_regex_components = true,
+      dotnet_highlight_related_json_components = true,
+    },
+    navigation = {
+      dotnet_navigate_to_decompiled_sources = true,
+    },
+    ["csharp|inlay_hints"] = {
+      csharp_enable_inlay_hints_for_types = false,
+      csharp_enable_inlay_hints_for_implicit_variable_types = false,
+      csharp_enable_inlay_hints_for_implicit_object_creation = false,
+      csharp_enable_inlay_hints_for_lambda_parameter_types = true,
+      dotnet_enable_inlay_hints_for_parameters = true,
+      dotnet_enable_inlay_hints_for_literal_parameters = true,
+      dotnet_enable_inlay_hints_for_object_creation_parameters = true,
+      dotnet_enable_inlay_hints_for_indexer_parameters = false,
+      dotnet_enable_inlay_hints_for_other_parameters = false,
+      dotnet_suppress_inlay_hints_for_parameters_that_differ_only_by_suffix = true,
+      dotnet_suppress_inlay_hints_for_parameters_that_match_argument_name = true,
+      dotnet_suppress_inlay_hints_for_parameters_that_match_method_intent = true,
+    },
+    ["csharp|code_lens"] = {
+      dotnet_enable_references_code_lens = false,
+      dotnet_enable_tests_code_lens = true,
+    },
+    ["csharp|background_analysis"] = {
+      dotnet_analyzer_diagnostics_scope = "openFiles",
+      dotnet_compiler_diagnostics_scope = "openFiles",
+    },
+  },
+})
+
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    local bufnr = args.buf
+
+    if not client or (client.name ~= "roslyn" and client.name ~= "roslyn_ls") then return end
+
+    vim.api.nvim_create_autocmd("InsertCharPre", {
+      desc = "Roslyn: Trigger auto insert on '/'",
+      buffer = bufnr,
+      callback = function()
+        if vim.v.char ~= "/" then return end
+
+        local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+        local params = {
+          _vs_textDocument = { uri = vim.uri_from_bufnr(bufnr) },
+          _vs_position = { line = row - 1, character = col + 1 },
+          _vs_ch = "/",
+          _vs_options = {
+            tabSize = vim.bo[bufnr].tabstop,
+            insertSpaces = vim.bo[bufnr].expandtab,
+          },
+        }
+
+        vim.defer_fn(function()
+          client:request("textDocument/_vs_onAutoInsert", params, function(err, result)
+            if err or not result then return end
+            vim.snippet.expand(result._vs_textEdit.newText)
+          end, bufnr)
+        end, 1)
+      end,
+    })
+  end,
+})
+
+return {
+  helpers.get_plugin_by_repo("seblyng/roslyn.nvim", {
+    ft = { "cs", "razor" },
+    opts = {
+      broad_search = false,
+      silent = false,
+      -- Currently not doable on linux, inotify is reaching the limit all the time.
+      -- Does not matter how much increasement we've done
+      filewatching = "off",
+    },
+  }),
+}

@@ -1,0 +1,194 @@
+call plug#begin()
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-surround'
+Plug 'machakann/vim-highlightedyank'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'easymotion/vim-easymotion'
+Plug 'preservim/nerdtree'
+call plug#end()
+
+let mapleader = ' '
+
+" General settings
+set showmode
+set showcmd
+set visualbell
+" set clipboard+=unnamed
+set showmodewidget
+set idearefactormode=keep
+set autoindent
+
+" Search improvements
+set ignorecase smartcase
+set incsearch
+set hlsearch
+
+set ru
+set surround
+set multiple-cursors
+set ReplaceWithRegister
+set commentary
+
+set easymotion
+set notimeout
+set which-key
+set timeoutlen=5000
+
+set relativenumber number " Show line numbers "
+
+nmap <Leader>w /\u<CR>
+
+" Yank to system clipboard
+nmap <leader>y "+y
+vmap <leader>y "+y
+nmap <leader>Y "+Y
+
+" Paste from system clipboard
+nmap <leader>p "+p
+nmap <leader>P "+P
+vmap <leader>p "+p
+vmap <leader>P "+
+
+" Scroll and center
+nnoremap <silent> <C-d> <C-d>zz
+nnoremap <silent> <C-u> <C-u>zz
+
+" Line break in normal mode
+nnoremap o o<Esc>0"_D
+nnoremap O O<Esc>0"_D
+
+" Move line up and down
+nnoremap <A-k> :m .-2<CR>==
+nnoremap <A-j> :m .+1<CR>==
+vnoremap <A-k> :m .-2<CR>==
+vnoremap <A-j> :m .+1<CR>==
+
+" indent new line and paste data
+nnoremap <Leader>cc cc<Esc>PJ
+
+" multiple cursors
+map mc <A-n>
+map mx <A-x>
+map mp <A-p>
+
+" add highlight for keymap  files
+autocmd BufEnter,BufRead,BufNewFile *.keymap setf dosini
+autocmd BufEnter,BufRead,BufNewFile *.conf setf dosini
+
+" set tabwidth to 2 for js/ts files
+
+" Typescript and Javascript settings
+augroup ReactTypescriptFileTypes
+    autocmd!
+
+    autocmd FileType javascript setlocal shiftwidth=2 tabstop=2 softtabstop=0
+    autocmd BufNewFile,BufRead *.ts set filetype=typescript
+    autocmd BufNewFile,BufRead *.tsx set filetype=typescriptreact
+    autocmd BufNewFile,BufRead *.jsx set filetype=javascriptreact
+
+    autocmd BufEnter *.{js,jsx.ts,tsx} :syntax sync fromstart
+    autocmd BufEnter *.{js,jsx.ts,tsx} :syntax sync clear
+augroup END
+
+" Auto toggle absolute/relative line numbers "
+augroup numbertoggle
+    autocmd!
+    autocmd BufEnter,FocusGained,InsertLeave,WinEnter * if &nu | set rnu | endif
+    autocmd BufLeave,FocusLost,InsertEnter,WinLeave * if &nu | set nornu | endif
+augroup END
+
+" surround with
+nmap gsd ds
+nmap gsr cs
+nmap gsa ys
+
+" multiple cursors
+nmap <A-n> <Plug>NextWholeOccurrence
+xmap <A-n> <Plug>NextWholeOccurrence
+nmap g<A-n> <Plug>NextOccurrence
+xmap g<A-n> <Plug>NextOccurrence
+xmap <A-x> <Plug>SkipOccurrence
+xmap <A-p> <Plug>RemoveOccurrence
+
+" NERDTree settings
+set NERDTree
+map <Leader>e :NERDTreeToggle<CR>
+nnoremap <leader>E :action ActivateProjectToolWindow<CR>
+
+" Highlight yanked text
+set highlightedyank
+let g:highlightedyank_highlight_duration = "5000"
+let g:highlightedyank_highlight_color = "rgba(238, 153, 160, 50)"
+
+" Rename current file
+nmap <leader>cR <Action>(RenameFile)
+
+" built-in nav
+nmap <C-o> <Action>(Back)
+nmap <C-i> <Action>(Forward)
+
+" preserve buit-in nav
+nmap g<C-o> <C-o>
+nmap g<C-i> <C-i>
+
+" Go to implementation or declaration, find usages
+map <leader>ti <Action>(GotoImplementation)
+map <leader>td <Action>(GotoDeclaration)
+nmap gi <Action>(GotoImplementation)
+map gf <Action>(FindUsages)
+map gF <Action>(FindUsagesInFile)
+
+" refactoring
+nmap <leader>cf <Action>(ReformatCode)
+nmap <leader>cF <Action>(ReformatCode)
+nmap ga <Action>(ReArrangeCode)
+map <leader>cr <Action>(RenameElement)
+map <leader>R <Action>(Refactorings.QuickListPopupAction)
+map <leader>sw <Action>(SurroundWith)
+map <leader>swl <Action>(SurroundWithLiveTemplate)
+map <leader>ca <Action>(ShowIntentionActions)
+
+" breakpoints & debugger
+map <leader>bb <Action>(ToggleLineBreakpoint)
+map <leader>br <Action>(Debugger.RemoveAllBreakpoints)
+map <A-r> <Action>(Resume)
+map <A-q> <Action>(Stop)
+map <A-s>u <Action>(StepInto)
+map <A-s>i <Action>(StepOver)
+map <A-s>o <Action>(StepOut)
+
+" solution/proj things
+map <leader>bu <Action>(BuildSolutionAction)
+map <leader>bur <Action>(RebuildSolutionAction)
+map <leader>bc <Action>(CleanSolutionAction)
+
+"ai assistant & copilot
+"
+nmap <leader>ag <Action>(AIAssistant.Editor.AskAiAssistantInEditor)
+vmap <leader>ag <Action>(AIAssistant.Editor.AskAiAssistantInEditor)
+nmap <leader>acs <Action>(AIAssistant.GenerateFileCommitSummary)
+nmap <leader>ap <Action>(AIAssistant.Chat.AIPopupChat)
+nmap <leader>at <Action>(AIAssistant.ToolsDropdown)
+vmap <leader>at <Action>(AIAssistant.ToolsDropdown)
+map <leader>aca <Action>(AIAssistant.ToolWindow.List.ContextActions)
+vmap <leader>aca <Action>(AIAssistant.ToolWindow.List.ContextActions)
+
+" fuzzy-finder
+map <Leader>sf <action>(com.mituuz.fuzzier.Fuzzier)
+map <Leader>sm <action>(com.mituuz.fuzzier.FuzzyMover)
+map <Leader>sv <action>(com.mituuz.fuzzier.FuzzierVCS)
+map <Leader>sg <action>(com.mituuz.fuzzier.FuzzyGrep)
+
+" search
+map <leader><space> <Action>(SearchEverywhere)
+map <leader>fs <Action>(SearchEverywhere)
+map <leader>fv <Action>(StructureViewPopupMenu)
+map <leader>cs <Action>(FileStructurePopup)
+
+" debugger
+map <leader>5 <Action>(Debug)
+map <leader>2 <Action>(RiderUnitTestRunContextAction)
+map <leader>0 <Action>(Stop)
+
+" source
+map <leader>9 :source ~/.ideavimrc<CR>

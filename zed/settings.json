@@ -1,0 +1,18 @@
+{
+  "base_keymap": "VSCode",
+  "vim_mode": true,
+  "ui_font_size": 15,
+  "buffer_font_size": 12,
+  "theme": {
+    "mode": "system",
+    "light": "Noctalia Light Transparent",
+    "dark": "Noctalia Dark Transparent"
+  },
+  "auto_install_extensions": {
+    "html": true,
+    "dockerfile": true,
+    "docker-compose": true,
+    "toml": true,
+    "sql": true
+  }
+}

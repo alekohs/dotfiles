@@ -1,0 +1,18 @@
+# ─────────────────────────────────────────────
+# Theme & style
+# ─────────────────────────────────────────────
+--theme="vague"              
+--style="numbers,changes,header"  # Show line numbers, git changes, file header
+--italic-text=always              # Show italics for comments/emphasis
+
+# ─────────────────────────────────────────────
+# Behavior
+# ─────────────────────────────────────────────
+--paging=always                   # Always use pager
+--wrap=auto                       # Don’t wrap long lines
+
+# ─────────────────────────────────────────────
+# Syntax mappings (ensure highlighting)
+# ─────────────────────────────────────────────
+--map-syntax="md:markdown"        # Make README.md highlight as Markdown
+--map-syntax="json:json"          # JSON files highlighted properly

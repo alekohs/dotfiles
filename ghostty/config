@@ -1,0 +1,41 @@
+window-decoration = true
+window-padding-y = 10
+window-padding-x = 10
+font-size = 10
+background-opacity = 1
+
+copy-on-select = true
+
+shell-integration = fish
+shell-integration-features = no-cursor
+mouse-hide-while-typing = true
+
+quick-terminal-position = top
+quick-terminal-screen = mouse
+
+theme = Vague 
+font-family = "JetbrainsMono Nerd Font"
+font-family-italic = "ComicCodeLigatures Nerd Font"
+
+split-divider-color = #6e6a86
+
+unfocused-split-opacity = 0.75
+
+window-height = 45
+window-width = 150
+
+cursor-opacity = 0.9
+cursor-style = block
+cursor-style-blink = false
+
+selection-foreground = #e0e0e4
+selection-background = #3e3e42
+
+# Copy/paste with super key
+keybind = super+c=copy_to_clipboard
+keybind = super+v=paste_from_clipboard
+keybind = shift+enter=text:\n
+keybind = alt+backspace=text:\x1b\x7f
+
+# Keybindings (uncomment to enable Ghostty native pane/tab management)
+# config-file = ~/.config/ghostty/key.config
