@@ -1,9 +1,9 @@
 local blink_cfg = {
+  "saghen/blink.cmp",
   event = { "InsertEnter", "CmdlineEnter" },
   version = "1.*",
   dependencies = {
-    helpers.get_plugin("mini-nvim", "echasnovski/mini.snippets"),
-    helpers.get_plugin("mini-nvim", "echasnovski/mini.icons"),
+    "echasnovski/mini.nvim",
   },
   opts = {
     appearance = {
@@ -101,5 +101,5 @@ local blink_cfg = {
 }
 
 return {
-  helpers.get_plugin_by_repo("saghen/blink.cmp", blink_cfg),
+  blink_cfg,
 }

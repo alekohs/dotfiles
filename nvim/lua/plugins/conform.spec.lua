@@ -1,4 +1,5 @@
-return helpers.get_plugin_by_repo("stevearc/conform.nvim", {
+return {
+  "stevearc/conform.nvim",
   cmd = "ConformInfo",
   event = "VeryLazy",
   opts = {
@@ -87,4 +88,4 @@ return helpers.get_plugin_by_repo("stevearc/conform.nvim", {
       desc = "Format injected language",
     },
   },
-})
+}

@@ -1,0 +1,22 @@
+### Garbage Section ###
+
+# VS Code / VS Codium
+.vscode/
+.vscode-oss/
+
+# IntelliJ
+*.iml
+*.ipr
+*.iws
+.idea/
+.fleet/
+
+# Wakatime
+*.wakatime*
+
+# xcodebuild.nvim
+.nvim/xcodebuild
+
+# dotnet/rider/vs
+*.DotSettings.user
+*.razor__virtual.html

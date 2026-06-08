@@ -1,5 +1,6 @@
 return {
-  helpers.get_plugin("rose-pine", "rose-pine/neovim", {
+  {
+    "rose-pine/neovim",
     cond = not vim.g.vscode,
     name = "rose-pine",
     lazy = false,
@@ -40,13 +41,14 @@ return {
         ["@variable.parameter.builtin"] = { italic = false },
       },
     },
-  }),
-  helpers.get_plugin("vague.nvim", "vague2k/vague.nvim", {
+  },
+  {
+    "vague2k/vague.nvim",
     cond = not vim.g.vscode,
     name = "vague",
     lazy = false,
     opts = {
       transparent = true,
     },
-  }),
+  },
 }

@@ -1,5 +1,6 @@
 return {
-  helpers.get_plugin("nvim-lint", "mfussenegger/nvim-lint", {
+  {
+    "mfussenegger/nvim-lint",
     event = { "BufReadPre", "BufNewFile" },
 
     opts = {
@@ -79,5 +80,5 @@ return {
         callback = M.debounce(100, M.lint),
       })
     end,
-  }),
+  },
 }

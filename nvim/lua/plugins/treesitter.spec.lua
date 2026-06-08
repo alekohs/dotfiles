@@ -1,6 +1,7 @@
 return {
   -- nvim-treesitter (parser installer only — highlighting handled by vim.treesitter.start())
-  helpers.get_plugin_by_repo("nvim-treesitter/nvim-treesitter", {
+  {
+    "nvim-treesitter/nvim-treesitter",
     branch = "main",
     lazy = false,
     opts = {
@@ -10,20 +11,22 @@ return {
       vim.opt.runtimepath:append(opts.install_dir)
       require("nvim-treesitter").setup(opts)
     end,
-  }),
+  },
 
   -- Auto-close HTML/JSX tags (uses vim.treesitter directly)
-  helpers.get_plugin_by_repo("windwp/nvim-ts-autotag", {
+  {
+    "windwp/nvim-ts-autotag",
     event = { "BufReadPost", "BufNewFile" },
     opts = {
       opts = {
         enable_close_on_slash = true,
       },
     },
-  }),
+  },
 
   -- Treesitter context (sticky function headers)
-  helpers.get_plugin_by_repo("nvim-treesitter/nvim-treesitter-context", {
+  {
+    "nvim-treesitter/nvim-treesitter-context",
     event = { "BufReadPre", "BufNewFile" },
     opts = { mode = "cursor", max_lines = 3 },
     config = function(_, opts)
@@ -31,10 +34,11 @@ return {
       tsc.setup(opts)
       vim.keymap.set("n", "<leader>ut", function() tsc.toggle() end, { desc = "Toggle treesitter context" })
     end,
-  }),
+  },
 
   -- Treesitter textobjects (uses vim.treesitter directly)
-  helpers.get_plugin_by_repo("nvim-treesitter/nvim-treesitter-textobjects", {
+  {
+    "nvim-treesitter/nvim-treesitter-textobjects",
     branch = "main",
     event = { "BufReadPost", "BufNewFile" },
     config = function()
@@ -131,5 +135,5 @@ return {
         { desc = "Prev class end" }
       )
     end,
-  }),
+  },
 }

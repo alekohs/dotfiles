@@ -1,5 +1,6 @@
 return {
-  helpers.get_plugin_by_repo("stevearc/oil.nvim", {
+  {
+    "stevearc/oil.nvim",
     cond = not vim.g.vscode,
     name = "oil.nvim",
     opts = {
@@ -64,7 +65,7 @@ return {
       },
     },
     dependencies = {
-      helpers.get_plugin("mini-nvim", "echasnovski/mini.icons"),
+      "echasnovski/mini.nvim",
     },
     keys = {
       {
@@ -74,54 +75,5 @@ return {
       },
     },
     lazy = false,
-  }),
-  helpers.get_plugin_by_repo("refractalize/oil-git-status.nvim", {
-    cond = not vim.g.vscode,
-    dependencies = { helpers.get_plugin_by_repo("stevearc/oil.nvim") },
-    config = function(_, opts)
-      require("oil-git-status").setup(opts)
-      vim.api.nvim_set_hl(0, "OilGitStatusIndexIgnored", { link = "DiagnosticError" })
-      vim.api.nvim_create_autocmd("ColorScheme", {
-        callback = function()
-          vim.api.nvim_set_hl(0, "OilGitStatusIndexIgnored", { link = "DiagnosticError" })
-        end,
-      })
-    end,
-    opts = {
-      symbols = {
-        index = {
-          ["A"] = helpers.icons.git.added,
-          ["M"] = helpers.icons.git.modified,
-          ["D"] = helpers.icons.git.removed,
-          ["R"] = helpers.icons.git.renamed,
-          ["C"] = helpers.icons.git.added,
-          ["U"] = helpers.icons.git.unmerged,
-          ["?"] = helpers.icons.git.untracked,
-          ["!"] = helpers.icons.git.ignored,
-        },
-        working_tree = {
-          ["A"] = helpers.icons.git.added,
-          ["M"] = helpers.icons.git.modified,
-          ["D"] = helpers.icons.git.removed,
-          ["R"] = helpers.icons.git.renamed,
-          ["C"] = helpers.icons.git.added,
-          ["U"] = helpers.icons.git.unmerged,
-          ["?"] = helpers.icons.git.untracked,
-          ["!"] = "",
-        },
-      },
-    },
-  }),
-  helpers.get_plugin("oil-lsp-diagnostics-nvim", "JezerM/oil-lsp-diagnostics.nvim", {
-    cond = not vim.g.vscode,
-    dependencies = { helpers.get_plugin_by_repo("stevearc/oil.nvim") },
-    opts = {
-      diagnostic_symbols = {
-        error = " " .. helpers.icons.diagnostics.error,
-        warn  = " " .. helpers.icons.diagnostics.warn,
-        hint  = " " .. helpers.icons.diagnostics.hint,
-        info  = " " .. helpers.icons.diagnostics.info,
-      },
-    },
-  }),
+  },
 }
