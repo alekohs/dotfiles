@@ -1,5 +1,6 @@
 return {
-  helpers.get_plugin_by_repo("lewis6991/gitsigns.nvim", {
+  {
+    "lewis6991/gitsigns.nvim",
     cond = not vim.g.vscode,
     event = { "BufReadPre", "BufNewFile" },
     opts = {
@@ -31,5 +32,5 @@ return {
         silent = true,
       },
     },
-  }),
+  },
 }

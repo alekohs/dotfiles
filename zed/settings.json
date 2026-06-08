@@ -4,9 +4,7 @@
   "ui_font_size": 15,
   "buffer_font_size": 12,
   "theme": {
-    "mode": "system",
-    "light": "Noctalia Light Transparent",
-    "dark": "Noctalia Dark Transparent"
+    "mode": "system"
   },
   "auto_install_extensions": {
     "html": true,

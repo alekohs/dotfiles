@@ -1,10 +1,10 @@
 return {
-  helpers.get_plugin("lualine.nvim", "nvim-lualine/lualine.nvim", {
+  {
+    "nvim-lualine/lualine.nvim",
     cond = not vim.g.vscode,
     event = "VeryLazy",
     dependencies = {
-      helpers.get_plugin("mini-nvim", "echasnovski/mini.icons"),
-      helpers.get_plugin_by_repo("SmiteshP/nvim-navic"),
+      "echasnovski/mini.nvim",
     },
     config = function()
       local palettes = {
@@ -14,6 +14,7 @@ return {
             base = p.base, text = p.text, muted = p.muted,
             accent_n = p.rose, accent_i = p.foam, accent_v = p.iris,
             accent_r = p.pine, accent_c = p.love, accent_t = p.pine,
+            info = p.foam, warn = p.gold, love = p.love,
           }
         end,
         ["vague"] = function()
@@ -21,6 +22,7 @@ return {
             base = "#141415", text = "#cdcdcd", muted = "#606079",
             accent_n = "#be8c8c", accent_i = "#b4d4cf", accent_v = "#bb9dbd",
             accent_r = "#7894ab", accent_c = "#d8647e", accent_t = "#7894ab",
+            info = "#b4d4cf", warn = "#f3be7c", love = "#d8647e",
           }
         end,
       }
@@ -68,11 +70,59 @@ return {
         }
       end
 
-      local function navic_cond()
-        local buf_size_limit = 1024 * 1024 -- 1MB
-        local lines = vim.api.nvim_buf_line_count(0)
-        if vim.api.nvim_buf_get_offset(0, lines) > buf_size_limit then return false end
-        return require("nvim-navic").is_available()
+      local function ui_palette()
+        local scheme = vim.g.colors_name or "rose-pine"
+        return (palettes[scheme] or palettes["rose-pine"])()
+      end
+
+      local function project_name()
+        return vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
+      end
+
+      local function lsp_clients()
+        local clients = vim.lsp.get_clients({ bufnr = 0 })
+        if #clients == 0 then return "" end
+        local names = {}
+        for _, client in ipairs(clients) do
+          names[#names + 1] = client.name
+        end
+        return table.concat(names, " ")
+      end
+
+      local function search()
+        if vim.v.hlsearch == 0 then return "" end
+        local ok, sc = pcall(vim.fn.searchcount, { maxcount = 999, timeout = 250 })
+        if not ok or (sc.total or 0) == 0 then return "" end
+        local term = vim.fn.getreg("/")
+        if #term > 24 then term = term:sub(1, 23) .. "…" end
+        return string.format("%s [%d/%d]", term, sc.current, sc.total)
+      end
+
+      local lsp_spinner = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
+      local lsp_spin_i = 0
+      local lsp_progress_msg = ""
+      local function lsp_progress()
+        return lsp_progress_msg
+      end
+
+      local function selection_count()
+        local mode = vim.fn.mode()
+        if mode == "V" then
+          return (math.abs(vim.fn.line(".") - vim.fn.line("v")) + 1) .. "L"
+        elseif mode == "\22" then
+          local lines = math.abs(vim.fn.line(".") - vim.fn.line("v")) + 1
+          local cols = math.abs(vim.fn.col(".") - vim.fn.col("v")) + 1
+          return lines .. "×" .. cols
+        elseif mode == "v" then
+          return (vim.fn.wordcount().visual_chars or 0) .. "C"
+        end
+        return ""
+      end
+
+      local function lazy_updates()
+        local ok, status = pcall(require, "lazy.status")
+        if not ok or not status.has_updates() then return "" end
+        return status.updates()
       end
 
       local function location_progress()
@@ -119,7 +169,9 @@ return {
             { "branch", icon = "" },
             { "diff", symbols = { added = helpers.icons.git.added .. " ", modified = helpers.icons.git.modified .. " ", removed = helpers.icons.git.removed .. " " } },
           },
-          lualine_c = {},
+          lualine_c = {
+            { project_name, icon = "" },
+          },
           lualine_x = {
             {
               function()
@@ -127,14 +179,21 @@ return {
                 if reg ~= "" then return " rec @" .. reg end
                 return ""
               end,
-              color = { fg = "#9ccfd8" },
+              color = function() return { fg = ui_palette().info } end,
             },
             {
-              "searchcount",
-              color = { fg = "#eb6f92" },
+              search,
+              icon = "",
+              color = function() return { fg = ui_palette().love } end,
             },
+            { lsp_progress, color = function() return { fg = ui_palette().info } end },
+            { lsp_clients, icon = "" },
+            { lazy_updates, icon = "󰚰", color = function() return { fg = ui_palette().warn } end },
           },
-          lualine_y = { { location_progress } },
+          lualine_y = {
+            { selection_count, color = function() return { fg = ui_palette().muted } end },
+            { location_progress },
+          },
           lualine_z = {
             {
               "encoding",
@@ -156,12 +215,7 @@ return {
               symbols = { modified = " ●", readonly = " ", unnamed = "[No Name]" },
             },
           },
-          lualine_c = {
-            {
-              "navic",
-              cond = navic_cond,
-            },
-          },
+          lualine_c = {},
           lualine_x = {
             {
               "diagnostics",
@@ -194,6 +248,20 @@ return {
         callback = require("lualine").refresh,
       })
 
+      vim.api.nvim_create_autocmd("LspProgress", {
+        callback = function(ev)
+          local val = ev.data and ev.data.params and ev.data.params.value
+          if type(val) ~= "table" then return end
+          if val.kind == "end" then
+            lsp_progress_msg = ""
+          else
+            lsp_spin_i = (lsp_spin_i % #lsp_spinner) + 1
+            lsp_progress_msg = lsp_spinner[lsp_spin_i] .. " " .. (val.title or "")
+          end
+          require("lualine").refresh()
+        end,
+      })
+
       vim.api.nvim_create_autocmd("ColorScheme", {
         callback = function()
           local lualine = require("lualine")
@@ -203,5 +271,5 @@ return {
         end,
       })
     end,
-  }),
+  },
 }

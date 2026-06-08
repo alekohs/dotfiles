@@ -1,5 +1,6 @@
 return {
-  helpers.get_plugin_by_repo("mason-org/mason.nvim", {
+  {
+    "mason-org/mason.nvim",
     opts = {
       ui = {
         border = "rounded",
@@ -9,8 +10,9 @@ return {
         "github:Crashdummyy/mason-registry",
       },
     },
-  }),
-  helpers.get_plugin_by_repo("WhoIsSethDaniel/mason-tool-installer.nvim", {
+  },
+  {
+    "WhoIsSethDaniel/mason-tool-installer.nvim",
     opts = {
       ensure_installed = {
         "jq",
@@ -35,7 +37,7 @@ return {
         { "sqls", condition = function() return vim.fn.executable("go") == 1 end },
         "qmlls",
         { "roslyn", condition = function() return vim.fn.executable("dotnet") == 1 end },
-        { "powershell_es", condition = function() return vim.fn.executable("pwsh") == 1 end },
+        { "powershell-editor-services", condition = function() return vim.fn.executable("pwsh") == 1 end },
 
         -- Formatters
         "stylua",
@@ -59,13 +61,5 @@ return {
         "sqlfluff",
       },
     },
-  }),
-
-  helpers.get_plugin_by_repo("mason-org/mason-lspconfig.nvim", {
-    opts = {},
-    dependencies = {
-      helpers.get_plugin_by_repo("mason-org/mason.nvim"),
-      -- helpers.get_plugin_by_repo("neovim/nvim-lspconfig"")
-    },
-  }),
+  },
 }

@@ -1,10 +1,11 @@
 return {
-  helpers.get_plugin("harpoon2", "ThePrimeagen/harpoon", {
+  {
+    "ThePrimeagen/harpoon",
     cond = not vim.g.vscode,
     event = "VeryLazy",
     branch = "harpoon2",
     dependencies = {
-      helpers.get_plugin_by_repo("nvim-lua/plenary.nvim")
+      "nvim-lua/plenary.nvim",
     },
     config = function()
       local harpoon = require("harpoon")
@@ -26,5 +27,5 @@ return {
       vim.keymap.set("n", "<C-S-P>", function() harpoon:list():prev() end, { desc = "Harpoon - Previous" })
       vim.keymap.set("n", "<C-S-N>", function() harpoon:list():next() end, { desc = "Harpoon - Next" })
     end,
-  }),
+  },
 }

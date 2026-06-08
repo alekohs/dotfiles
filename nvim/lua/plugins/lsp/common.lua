@@ -11,13 +11,6 @@ M.capabilities = function()
 end
 
 M.on_attach = function(client, bufnr)
-if client.server_capabilities.documentSymbolProvider then
-    local dominated = client.name == "html" and vim.bo[bufnr].filetype == "razor"
-    if not dominated then
-      require("nvim-navic").attach(client, bufnr)
-    end
-  end
-
   if client:supports_method("textDocument/inlayHint") and vim.bo[bufnr].filetype ~= "vue" then
     vim.lsp.inlay_hint.enable(not vim.g.inlay_focus_off, { bufnr = bufnr })
   end

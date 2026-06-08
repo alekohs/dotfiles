@@ -113,7 +113,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
 })
 
 return {
-  helpers.get_plugin_by_repo("seblyng/roslyn.nvim", {
+  {
+    "seblyng/roslyn.nvim",
     ft = { "cs", "razor" },
     opts = {
       broad_search = false,
@@ -122,5 +123,5 @@ return {
       -- Does not matter how much increasement we've done
       filewatching = "off",
     },
-  }),
+  },
 }

@@ -1,23 +1,3 @@
-local lsps = {
-  "cssls",
-  "dockerls",
-  "fish_lsp",
-  "gopls",
-  "graphql",
-  "lua_ls",
-  "nixd",
-  "jsonls",
-  "sqlls",
-  "rust_analyzer",
-  "tailwindcss",
-  "taplo",
-  "lemminx",
-  "yamlls",
-  "ziggy",
-  "markdown_oxide",
-  "powershell_es",
-}
-
 local function rename_file()
   local bufnr = vim.api.nvim_get_current_buf()
   local old_name = vim.api.nvim_buf_get_name(bufnr)
@@ -66,20 +46,9 @@ end
 
 return {
   require("plugins.lsp.dotnet"),
-  helpers.get_plugin_by_repo("rachartier/tiny-inline-diagnostic.nvim", {
-    event = "VeryLazy",
-    priority = 1000,
-    opts = {
-      options = {
-        set_arrow_to_diag_color = true,
-      },
-    },
-  }),
-  helpers.get_plugin_by_repo("neovim/nvim-lspconfig", {
+  {
+    "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" },
-    dependencies = {
-      helpers.get_plugin_by_repo("SmiteshP/nvim-navic"),
-    },
     opts = {
       diagnostics = {
         signs = {
@@ -163,9 +132,33 @@ return {
         end,
       })
 
+      -- Enable servers natively (replaces mason-lspconfig automatic_enable).
+      -- roslyn is handled by roslyn.nvim, not here.
+      vim.lsp.enable({
+        "bashls",
+        "docker_language_server",
+        "fish_lsp",
+        "gopls",
+        "html",
+        "jsonls",
+        "lemminx",
+        "lua_ls",
+        "markdown_oxide",
+        "powershell_es",
+        "pylsp",
+        "qmlls",
+        "rust_analyzer",
+        "sqls",
+        "tailwindcss",
+        "taplo",
+        "ts_ls",
+        "vimls",
+        "yamlls",
+      })
+
       vim.diagnostic.config({
         virtual_text = false,
-        virtual_lines = false,
+        virtual_lines = { current_line = true },
         signs = opts.diagnostics.signs,
       })
     end,
@@ -202,8 +195,9 @@ return {
         desc = "Rename File",
       },
     },
-  }),
-  helpers.get_plugin_by_repo("danymat/neogen", {
+  },
+  {
+    "danymat/neogen",
     opts = {
       snippet_engine = "mini",
       languages = {
@@ -218,5 +212,5 @@ return {
     keys = {
       { "<leader>cn", "<CMD>Neogen<CR>", desc = "Generate annotation" },
     },
-  }),
+  },
 }

@@ -5,7 +5,8 @@ local function close_oil_get_cwd()
   return dir
 end
 
-return helpers.get_plugin_by_repo("ibhagwan/fzf-lua", {
+return {
+  "ibhagwan/fzf-lua",
   cond = not vim.g.vscode,
   opts = {
     fzf_colors = {
@@ -28,7 +29,7 @@ return helpers.get_plugin_by_repo("ibhagwan/fzf-lua", {
       ignore = { "__virtual%.cs$" },
     },
   },
-  dependencies = { helpers.get_plugin("mini-nvim", "echasnovski/mini.icons") },
+  dependencies = { "echasnovski/mini.nvim" },
   config = function(_, opts)
     require("fzf-lua").setup(opts)
     require("fzf-lua").register_ui_select()
@@ -101,4 +102,4 @@ return helpers.get_plugin_by_repo("ibhagwan/fzf-lua", {
     { "<leader>uc", function() require("fzf-lua").colorschemes() end, desc = "Find colorschemes" },
     { "<leader>uC", function() require("fzf-lua").awesome_colorschemes() end, desc = "Find awesome colorschemes" },
   },
-})
+}

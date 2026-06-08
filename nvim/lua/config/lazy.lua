@@ -26,6 +26,9 @@ require("lazy").setup({
   ui = {
     border = "rounded",
   },
+  git = {
+    url_format = vim.env.NVIM_PLUGINS_SSH == "1" and "git@github.com:%s.git" or "https://github.com/%s.git",
+  },
   checker = {
     enabled = true,
     notify = false,
