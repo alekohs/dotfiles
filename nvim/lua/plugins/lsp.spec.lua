@@ -132,6 +132,11 @@ return {
         end,
       })
 
+      -- PowerShell — point at the mason-installed bundle (no automatic_enable to set it).
+      vim.lsp.config("powershell_es", {
+        bundle_path = vim.fn.stdpath("data") .. "/mason/packages/powershell-editor-services",
+      })
+
       -- Enable servers natively (replaces mason-lspconfig automatic_enable).
       -- roslyn is handled by roslyn.nvim, not here.
       vim.lsp.enable({

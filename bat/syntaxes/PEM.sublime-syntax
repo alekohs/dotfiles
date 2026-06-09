@@ -1,0 +1,56 @@
+%YAML 1.2
+---
+name: PEM Certificate
+file_extensions:
+  - pem
+  - crt
+  - cer
+  - key
+  - csr
+  - pub
+  - ca-bundle
+first_line_match: '-----BEGIN '
+scope: source.pem
+
+contexts:
+  main:
+    - match: '^(-----BEGIN )(.+?)(-----)$'
+      captures:
+        1: keyword.control.begin.pem
+        2: entity.name.type.pem
+        3: keyword.control.begin.pem
+      push: block
+
+    - match: '^#.*$'
+      scope: comment.line.pem
+
+    - match: '^\S.*:.*$'
+      push: header-line
+
+  header-line:
+    - match: '^([A-Za-z][A-Za-z0-9-]*)(:)\s*(.*)'
+      captures:
+        1: entity.other.attribute-name.pem
+        2: punctuation.separator.pem
+        3: string.unquoted.pem
+    - match: '^(?=-----BEGIN|$)'
+      pop: true
+    - match: '^\s+(.*)$'
+      captures:
+        1: string.unquoted.pem
+    - match: ''
+      pop: true
+
+  block:
+    - match: '^(-----END )(.+?)(-----)$'
+      captures:
+        1: keyword.control.end.pem
+        2: entity.name.type.pem
+        3: keyword.control.end.pem
+      pop: true
+
+    - match: '^[A-Za-z0-9+/=]{1,76}$'
+      scope: string.other.base64.pem
+
+    - match: '^#.*$'
+      scope: comment.line.pem

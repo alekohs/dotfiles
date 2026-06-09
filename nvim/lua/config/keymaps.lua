@@ -37,10 +37,29 @@ local function get_listed_buffers()
   return vim.tbl_map(function(buf) return buf.bufnr end, vim.fn.getbufinfo({ buflisted = 1 }))
 end
 
-local function get_buffer_label(buf)
-  local name = vim.api.nvim_buf_get_name(buf)
-  if name == "" then return "[No Name]" end
-  return vim.fn.fnamemodify(name, ":t")
+local function get_buffer_labels(bufs)
+  local tails = {}
+  for _, buf in ipairs(bufs) do
+    local name = vim.api.nvim_buf_get_name(buf)
+    local tail = name == "" and "[No Name]" or vim.fn.fnamemodify(name, ":t")
+    tails[tail] = (tails[tail] or 0) + 1
+  end
+
+  local labels = {}
+  for _, buf in ipairs(bufs) do
+    local name = vim.api.nvim_buf_get_name(buf)
+    if name == "" then
+      labels[buf] = "[No Name]"
+    else
+      local tail = vim.fn.fnamemodify(name, ":t")
+      if tails[tail] > 1 then
+        labels[buf] = vim.fn.fnamemodify(name, ":h:t") .. "/" .. tail
+      else
+        labels[buf] = tail
+      end
+    end
+  end
+  return labels
 end
 
 local function delete_other_buffers()
@@ -59,10 +78,11 @@ local function refresh_buffer_mappings()
     pcall(vim.keymap.del, "n", "<leader>b" .. i)
   end
 
-  local bufs = get_listed_buffers()
-  for i, buf in ipairs(vim.list_slice(bufs, 1, 9)) do
+  local bufs = vim.list_slice(get_listed_buffers(), 1, 9)
+  local labels = get_buffer_labels(bufs)
+  for i, buf in ipairs(bufs) do
     vim.keymap.set("n", "<leader>b" .. i, function() goto_buffer(buf) end, {
-      desc = get_buffer_label(buf),
+      desc = labels[buf],
     })
   end
 end
