@@ -55,7 +55,7 @@ return {
           { mode = "n", keys = "]", desc = "+next" },
         },
         window = {
-          delay = 0,
+          delay = 500,
         },
       })
       MiniClue.ensure_all_triggers()

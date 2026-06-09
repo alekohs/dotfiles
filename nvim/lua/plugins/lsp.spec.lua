@@ -157,8 +157,8 @@ return {
       })
 
       vim.diagnostic.config({
-        virtual_text = false,
-        virtual_lines = { current_line = true },
+        virtual_text = { current_line = true },
+        virtual_lines = false,
         signs = opts.diagnostics.signs,
       })
     end,
@@ -185,6 +185,7 @@ return {
       { "<leader>cF", function() vim.lsp.buf.format() end, mode = "n", desc = "Format code with LSP" },
 
       { "K", function() vim.lsp.buf.hover({ border = "rounded", max_width = math.floor(vim.o.columns * 0.8) }) end, mode = "n", desc = "Hover" },
+      { "<leader>cl", function() vim.diagnostic.open_float({ border = "rounded" }) end, mode = "n", desc = "Line diagnostics" },
       { "<leader>gK", function() return vim.lsp.buf.signature_help() end, mode = "n", desc = "Signature help" },
       { "<C-k>", function() return vim.lsp.buf.signature_help() end, mode = "i", desc = "Signature help" },
       { "<leader>cr", vim.lsp.buf.rename, mode = "n", desc = "Rename" },
