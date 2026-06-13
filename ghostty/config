@@ -13,7 +13,7 @@ mouse-hide-while-typing = true
 quick-terminal-position = top
 quick-terminal-screen = mouse
 
-theme = Vague 
+theme = Vague
 font-family = "JetbrainsMono Nerd Font"
 font-family-italic = "ComicCodeLigatures Nerd Font"
 
@@ -30,6 +30,10 @@ cursor-style-blink = false
 
 selection-foreground = #e0e0e4
 selection-background = #3e3e42
+
+# Unbind for mac usage
+keybind = alt+left=unbind
+keybind = alt+right=unbind
 
 # Copy/paste with super key
 keybind = super+c=copy_to_clipboard
