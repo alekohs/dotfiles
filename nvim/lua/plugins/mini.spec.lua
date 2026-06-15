@@ -92,6 +92,7 @@ return {
 
       -- Pairs
       require("mini.pairs").setup()
+      require("mini.diff").setup()
 
       -- Surround
       require("mini.surround").setup({
