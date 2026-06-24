@@ -17,3 +17,5 @@
 # dotnet/rider/vs
 *.DotSettings.user
 *.razor__virtual.html
+
+**/.claude/settings.local.json

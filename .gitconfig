@@ -1,0 +1,22 @@
+[merge]
+    tool = vimdiff
+    conflictstyle = diff3
+[mergetool]
+    keepBackup = false
+[mergetool "vimdiff"]
+    trustExitCode = false
+    layout = LOCAL,BASE,REMOTE / MERGED
+[core]
+    excludesfile = ~/.gitignore_global
+[init]
+  defaultBranch = main
+[gpg]
+    format = ssh
+[commit]
+    gpgSign = true
+[tag]
+    gpgSign = true
+[alias]
+    dl = -c diff.external=difft log --ext-diff
+    ds = -c diff.external=difft show --ext-diff
+    dft = -c diff.external=difft diff
