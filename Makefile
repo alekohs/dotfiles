@@ -24,3 +24,15 @@ brew:
 	android-platform-tools cyberduck ghostty microsoft-edge \
 	raycast slack temurin@21 zed claude discord \
 	google-chrome mitmproxy rectangle tailscale tuist
+
+install:
+	@if [ -z "$(APP)" ]; then \
+	    echo "Error: APP is required. Usage: make install APP=<app-folder>"; \
+	    exit 1; \
+	fi
+	mkdir -p "${HOME}/.config/$(APP)"
+	rsync -a --delete ./$(APP)/ "${HOME}/.config/$(APP)/"
+
+copy:
+	mkdir -p "./$(APP)"
+	rsync -a "${HOME}/.config/$(APP)/" ./$(APP)/
