@@ -38,7 +38,7 @@ keybind = alt+right=unbind
 # Copy/paste with super key
 keybind = super+c=copy_to_clipboard
 keybind = super+v=paste_from_clipboard
-keybind = shift+enter=text:\n
+keybind = shift+enter=text:\x1b\r
 keybind = alt+backspace=text:\x1b\x7f
 
 # Keybindings (uncomment to enable Ghostty native pane/tab management)
