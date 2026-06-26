@@ -1,3 +1,53 @@
+local function format_with_progress()
+  local frames = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
+  local idx = 1
+  local buf = vim.api.nvim_create_buf(false, true)
+
+  local function render()
+    local text = " " .. frames[idx] .. " Formatting… "
+    vim.api.nvim_buf_set_lines(buf, 0, -1, false, { text })
+    return vim.fn.strdisplaywidth(text)
+  end
+
+  local win = vim.api.nvim_open_win(buf, false, {
+    relative = "editor",
+    anchor = "SE",
+    row = vim.o.lines - vim.o.cmdheight - 1,
+    col = vim.o.columns,
+    width = render(),
+    height = 1,
+    style = "minimal",
+    border = "rounded",
+    focusable = false,
+    noautocmd = true,
+  })
+  vim.cmd("redraw")
+
+  local timer = vim.uv.new_timer()
+  timer:start(0, 80, vim.schedule_wrap(function()
+    idx = idx % #frames + 1
+    if vim.api.nvim_buf_is_valid(buf) then
+      render()
+      vim.cmd("redraw")
+    end
+  end))
+
+  local function cleanup()
+    if timer then
+      timer:stop()
+      timer:close()
+      timer = nil
+    end
+    if vim.api.nvim_win_is_valid(win) then vim.api.nvim_win_close(win, true) end
+    if vim.api.nvim_buf_is_valid(buf) then vim.api.nvim_buf_delete(buf, { force = true }) end
+  end
+
+  require("conform").format({ async = true }, function(err)
+    cleanup()
+    if err then vim.notify(err, vim.log.levels.ERROR, { title = "conform" }) end
+  end)
+end
+
 return {
   "stevearc/conform.nvim",
   cmd = "ConformInfo",
@@ -6,7 +56,22 @@ return {
     default_format_opts = {
       lsp_format = "fallback",
     },
-    formatters = {},
+    formatters = {
+      sqlfluff = {
+        -- sqlfluff exits 1 when non-fixable lint violations remain (ST09, RF04, ...);
+        -- accept it so conform still applies the auto-fixes instead of discarding them.
+        exit_codes = { 0, 1 },
+        cwd = function(self, ctx)
+          return require("conform.util").root_file({
+            ".sqlfluff",
+            "pyproject.toml",
+            "setup.cfg",
+            "tox.ini",
+            ".git",
+          })(self, ctx)
+        end,
+      },
+    },
     formatters_by_ft = {
       bash = { "shellcheck", "shellharden", "shfmt" },
       sh = { "shellcheck", "shellharden", "shfmt" },
@@ -33,6 +98,7 @@ return {
       nix = { "nixfmt" },
       fish = { "fish_indent" },
       ps1 = { "powershell_es" },
+      sql = { "sqlfluff", timeout_ms = 10000 },
       -- ["*"] = { "codespell" },
       ["_"] = { "squeeze_blanks", "trim_whitespace", "trim_newlines", lsp_format = "last" },
     },
@@ -70,7 +136,7 @@ return {
     { "<leader>cg", ":FormatGlob<CR>", mode = "n", silent = true, desc = "Format files by glob" },
     {
       "<leader>cf",
-      function() require("conform").format() end,
+      format_with_progress,
       mode = "n",
       desc = "Format injected language",
     },
