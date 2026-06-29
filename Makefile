@@ -4,7 +4,7 @@ help:
 	@awk 'BEGIN{FS=":.*## "} /^[a-zA-Z_-]+:.*## / {printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
 fish:
-	@plugins="gazorby/fish-abbreviation-tips pure-fish/pure rose-pine/fish PatrickF1/fzf.fish oh-my-fish/plugin-foreign-env jorgebucaran/nvm.fish"; \
+	@plugins="gazorby/fish-abbreviation-tips pure-fish/pure rose-pine/fish PatrickF1/fzf.fish oh-my-fish/plugin-foreign-env jorgebucaran/nvm.fish icezyclon/zoxide.fish"; \
 	for plugin in $$plugins; do \
 		echo "Fish installing $$plugin"; \
 		fish -c "fisher install $$plugin"; \
