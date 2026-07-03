@@ -153,3 +153,28 @@ local window_mappings = {
 for _, map in ipairs(window_mappings) do
   vim.keymap.set("n", map.lhs, map.rhs, { desc = map.desc, remap = true })
 end
+
+-- Free the `gr` prefix so plain `gr` (LSP references, set in lsp.spec.lua) fires
+-- immediately instead of waiting on the default gr* LSP submenu.
+for _, lhs in ipairs({ "gra", "gri", "grn", "grr", "grt", "grx" }) do
+  pcall(vim.keymap.del, "n", lhs)
+end
+pcall(vim.keymap.del, "x", "gra")
+
+-- gco / gcO: open a commented line below / above and drop into insert mode.
+local function comment_newline(above)
+  local cs = vim.bo.commentstring
+  if cs == "" or not cs:find("%%s") then cs = "# %s" end
+  local left, right = cs:match("^(.-)%%s(.-)$")
+  left, right = vim.trim(left or ""), vim.trim(right or "")
+  local text, lefts
+  if right == "" then
+    text, lefts = left .. " ", 0
+  else
+    text, lefts = left .. "  " .. right, #right + 1
+  end
+  local keys = (above and "O" or "o") .. text .. string.rep("<Left>", lefts)
+  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(keys, true, false, true), "n", false)
+end
+vim.keymap.set("n", "gco", function() comment_newline(false) end, { desc = "Add comment below" })
+vim.keymap.set("n", "gcO", function() comment_newline(true) end, { desc = "Add comment above" })

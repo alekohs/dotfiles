@@ -28,6 +28,12 @@ return {
     files = {
       ignore = { "__virtual%.cs$" },
     },
+    winopts = {
+      preview = {
+        layout = "vertical",
+        vertical = "down:70%",
+      },
+    },
   },
   dependencies = { "echasnovski/mini.nvim" },
   config = function(_, opts)
