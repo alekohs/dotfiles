@@ -1,0 +1,19 @@
+{
+  "defaultModel": "qwen3-coder-next:latest",
+  "defaultProvider": "ollama",
+  "defaultThinkingLevel": "medium",
+  "enableInstallTelemetry": false,
+  "httpIdleTimeoutMs": 0,
+  "lastChangelogVersion": "0.78.0",
+  "packages": [
+    "npm:@ollama/pi-web-search",
+    "npm:pi-vim",
+    "npm:context-mode",
+    "npm:pi-intercom",
+    "npm:pi-subagents",
+    "npm:pi-prompt-template-model",
+    "npm:@juicesharp/rpiv-todo",
+    "npm:@juicesharp/rpiv-pi",
+    "npm:@juicesharp/rpiv-workflow"
+  ]
+}
