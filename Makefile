@@ -45,7 +45,7 @@ install:
 	    exit 1; \
 	fi
 	mkdir -p "${HOME}/.config/$(APP)"
-	rsync -a --delete ./$(APP)/ "${HOME}/.config/$(APP)/"
+	rsync -a ./$(APP)/ "${HOME}/.config/$(APP)/"
 
 copy:
 	mkdir -p "./$(APP)"
