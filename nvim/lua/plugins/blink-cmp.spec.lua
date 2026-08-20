@@ -82,7 +82,8 @@ local blink_cfg = {
         lsp = {
           score_offset = 100,
           min_keyword_length = function(ctx)
-            return ctx.trigger.initial_kind == "manual" and 0 or 1
+            local kind = ctx.trigger.initial_kind
+            return (kind == "manual" or kind == "trigger_character") and 0 or 1
           end,
         },
         path = {
