@@ -9,6 +9,7 @@ fish:
 		echo "Fish installing $$plugin"; \
 		fish -c "fisher install $$plugin"; \
 	done
+	cp ./fish/config.fish "${HOME}/.config/fish/config.fish"
 
 nvim:
 	mkdir -p "${HOME}/.config/nvim"

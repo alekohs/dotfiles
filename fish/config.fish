@@ -245,7 +245,8 @@ if status is-interactive
     set -x BIOME_CONFIG_PATH "$HOME/.config/biome.json"
 
     # manpager
-    set -gx MANPAGER "sh -c 'col -bx | bat -l man --paging=always'"
+    set -gx MANPAGER "less -i -R --use-color -Dd+C -Du+Y"
+    set -gx MANOPT "--no-hyphenation --no-justification"
 
     # Editor
     set -gx EDITOR nvim
