@@ -78,6 +78,33 @@ return {
         cmd = { "bash-language-server", "start" },
       })
 
+      -- C/C++
+      vim.lsp.config("clangd", {
+        cmd = {
+          "clangd",
+          "--background-index",
+          "--clang-tidy",
+          "--header-insertion=iwyu",
+          "--completion-style=detailed",
+          "--function-arg-placeholders=0",
+        },
+        filetypes = { "c", "cpp", "objc", "objcpp", "cuda" },
+        root_markers = {
+          ".clangd",
+          "compile_commands.json",
+          "compile_flags.txt",
+          "CMakeLists.txt",
+          "Makefile",
+          ".git",
+        },
+      })
+
+      -- CMake
+      vim.lsp.config("neocmake", {
+        filetypes = { "cmake" },
+        root_markers = { "CMakeLists.txt", ".git" },
+      })
+
       -- HTML
       vim.lsp.config("html", {
         filetypes = { "html", "razor" },
@@ -141,6 +168,7 @@ return {
       -- roslyn is handled by roslyn.nvim, not here.
       vim.lsp.enable({
         "bashls",
+        "clangd",
         "docker_language_server",
         "fish_lsp",
         "gopls",
@@ -149,6 +177,7 @@ return {
         "lemminx",
         "lua_ls",
         "markdown_oxide",
+        "neocmake",
         "powershell_es",
         "pylsp",
         "qmlls",
