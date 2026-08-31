@@ -131,114 +131,14 @@ if status is-interactive
         set -gx FZF_DEFAULT_OPTS "--color=fg:8,bg:-1,hl:5 --color=fg+:7,bg+:236,hl+:5 --color=border:8,header:3,gutter:-1 --color=spinner:5,info:4 --color=pointer:4,marker:1,prompt:8 --ansi --border --bind ctrl-j:down,ctrl-k:up --bind enter:accept"
     end
 
-    function nix_develop
-        if test (count $argv) -gt 0
-            nix develop ~/Developer/Github/devshells/$argv[1] -c fish
-        else
-            nix develop
-        end
-    end
-
-    #-------------------------------------------------------------------------------
-    # Custom Functions
-    #-------------------------------------------------------------------------------
-    # Bat functions
-    function bat_diff
-        git diff --name-only --relative --diff-filter=d | xargs bat --diff
-    end
-
-    function bat_tail
-        tail -f $argv[1] | bat --paging=never -l log
-    end
-
-    function bat_helper
-        $argv --help 2>&1 | bat --plain --language=help
-    end
-
-    # FZF functions
-    function fif
-        if test (count $argv) -eq 0
-            echo "No search parameter"
-            return 1
-        end
-        rg --files-with-matches --no-messages --ignore-case "$argv[1]" | fzf --preview "rg --ignore-case --pretty --context 10 '$argv[1]' {} || echo 'No matches in file'" --preview-window=right:70%
-    end
-
-    function fzfc
-        fzf \
-            --delimiter ":" \
-            --with-nth 1,2 \
-            --preview "bat --color=always --style=numbers --highlight-line {2} {1} | rg --color=always --context 3 {q}" \
-            --preview-window '~5' \
-            --bind "change:reload:rg --column --line-number --color=always --hidden --glob '!.git/*' {q} || true" \
-            --prompt "Search content> " \
-            --height 60% \
-            --layout=reverse
-    end
-
-    function fcd
-        set -l fzf_args +m --height 60% --layout=reverse
-        if test (count $argv) -gt 0
-            set fzf_args $fzf_args --query "$argv[1]"
-        end
-
-        set selection (fd . . --type directory --hidden --exclude .git --exclude node_modules | fzf $fzf_args)
-
-        if test -n "$selection"
-            cd $selection
-        end
-    end
-
-    function ffcd
-        set -l fd_args --type directory --hidden --exclude .git --exclude node_modules
-        if test (count $argv) -gt 1
-            set fd_args $argv[1] $argv[2] $fd_args
-        else if test (count $argv) -gt 0
-            set fd_args . $argv[1] $fd_args
-        end
-
-        set selection (fd $fd_args | fzf +m --height 60% --layout=reverse)
-
-        if test -n "$selection"
-            cd $selection
-        end
-    end
-
-    function dcd
-        if test (count $argv) -gt 0
-            ffcd $argv[1] ~/Developer
-        else
-            ffcd . ~/Developer
-        end
-    end
-
     # Tmux functions
     alias ta="kokoarch-tmux-session -c"
-
-    function ts
-        if set -q TMUX
-            # Use tmux popup when inside tmux
-            set session (tmux display-popup -E "tmux ls 2>/dev/null | fzf --reverse | cut -d: -f1")
-            if test -n "$session"
-                tmux switch-client -t $session
-            end
-        else
-            # Use regular fzf when not in tmux
-            set session (tmux ls 2>/dev/null | fzf --reverse | cut -d: -f1)
-            if test -n "$session"
-                tmux attach-session -t $session
-            end
-        end
-    end
 
     #-------------------------------------------------------------------------------
     # Prompt
     #-------------------------------------------------------------------------------
     # Do not show any greeting
     set --universal --erase fish_greeting
-    function fish_greeting
-    end
-    funcsave fish_greeting -q
 
     set -gx LIBVIRT_DEFAULT_URI qemu:///system
     set -x XDG_CONFIG_HOME "$HOME/.config"

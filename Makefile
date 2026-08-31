@@ -10,6 +10,8 @@ fish:
 		fish -c "fisher install $$plugin"; \
 	done
 	cp ./fish/config.fish "${HOME}/.config/fish/config.fish"
+	mkdir -p "${HOME}/.config/fish/functions"
+	rsync -a ./fish/functions/ "${HOME}/.config/fish/functions/"
 
 nvim:
 	mkdir -p "${HOME}/.config/nvim"
