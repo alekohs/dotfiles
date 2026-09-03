@@ -34,7 +34,7 @@ brew:
 	fish fisher fzf imagemagick jq lazydocker lazygit librsvg \
 	mono-libgdiplus neovim opencode podman \
 	swiftlint telnet tmux tree-sitter-cli xcbeautify \
-	xcode-build-server xcodegen mise difftastic
+	xcode-build-server xcodegen mise difftastic bash
 
 	brew install --cask aerospace claude-code gcloud-cli hyperkey \
 	obsidian sf-symbols tailscale-app \
