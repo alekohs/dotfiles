@@ -86,11 +86,11 @@ return {
       typescript = { "biome-check" },
       typescriptreact = { "biome-check" },
 
-      c = { "clang_format" },
-      cpp = { "clang_format" },
-      objc = { "clang_format" },
-      objcpp = { "clang_format" },
-      cuda = { "clang_format" },
+      c = { "clang-format" },
+      cpp = { "clang-format" },
+      objc = { "clang-format" },
+      objcpp = { "clang-format" },
+      cuda = { "clang-format" },
 
       swift = { "swiftformat" },
 
