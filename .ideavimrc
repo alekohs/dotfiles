@@ -1,11 +1,9 @@
-call plug#begin()
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'machakann/vim-highlightedyank'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'easymotion/vim-easymotion'
 Plug 'preservim/nerdtree'
-call plug#end()
 
 let mapleader = ' '
 
@@ -14,7 +12,6 @@ set showmode
 set showcmd
 set visualbell
 " set clipboard+=unnamed
-set showmodewidget
 set idearefactormode=keep
 set autoindent
 
@@ -22,8 +19,8 @@ set autoindent
 set ignorecase smartcase
 set incsearch
 set hlsearch
+nnoremap <silent> <C-l> :nohlsearch<CR>
 
-set ru
 set surround
 set multiple-cursors
 set ReplaceWithRegister
@@ -34,7 +31,7 @@ set notimeout
 set which-key
 set timeoutlen=5000
 
-set relativenumber number " Show line numbers "
+set relativenumber number
 
 nmap <Leader>w /\u<CR>
 
@@ -131,12 +128,18 @@ nmap <C-i> <Action>(Forward)
 nmap g<C-o> <C-o>
 nmap g<C-i> <C-i>
 
-" Go to implementation or declaration, find usages
-map <leader>ti <Action>(GotoImplementation)
-map <leader>td <Action>(GotoDeclaration)
+" LSP-style navigation (mirrors nvim lsp.spec.lua / fzf-lua.spec.lua)
+nmap gd <Action>(GotoDeclaration)
+nmap gD <Action>(GotoDeclarationOnly)
 nmap gi <Action>(GotoImplementation)
-map gf <Action>(FindUsages)
-map gF <Action>(FindUsagesInFile)
+nmap gy <Action>(GotoTypeDeclaration)
+nmap gr <Action>(FindUsages)
+nmap K <Action>(QuickJavaDoc)
+nmap <leader>cl <Action>(ShowErrorDescription)
+nmap <leader>gK <Action>(ParameterInfo)
+imap <C-k> <Action>(ParameterInfo)
+nmap <leader>cS <Action>(GotoSymbol)
+nmap <leader>ci <Action>(CallHierarchy)
 
 " refactoring
 nmap <leader>cf <Action>(ReformatCode)
