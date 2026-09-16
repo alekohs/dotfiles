@@ -1,8 +1,13 @@
 local function close_oil_get_cwd()
-  if vim.bo.filetype ~= "oil" then return nil end
-  local dir = require("oil").get_current_dir()
-  require("oil").close()
-  return dir
+  if vim.bo.filetype == "oil" then
+    local dir = require("oil").get_current_dir()
+    require("oil").close()
+    return dir
+  end
+
+  local file = vim.api.nvim_buf_get_name(0)
+  if vim.bo.buftype ~= "" or file == "" or vim.startswith(file, vim.fn.getcwd() .. "/") then return nil end
+  return vim.fs.root(file, ".git") or vim.fs.dirname(file)
 end
 
 return {

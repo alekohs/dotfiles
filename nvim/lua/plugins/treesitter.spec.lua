@@ -88,7 +88,7 @@ return {
       )
       vim.keymap.set(
         { "n", "x", "o" },
-        "]d",
+        "]i",
         function() require("nvim-treesitter-textobjects.move").goto_next_start("@conditional.outer", "textobjects") end,
         { desc = "Next conditional start" }
       )
@@ -118,7 +118,7 @@ return {
       )
       vim.keymap.set(
         { "n", "x", "o" },
-        "[d",
+        "[i",
         function() require("nvim-treesitter-textobjects.move").goto_previous_start("@conditional.outer", "textobjects") end,
         { desc = "Prev conditional start" }
       )
