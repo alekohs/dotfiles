@@ -43,12 +43,12 @@ abbr gw "git worktree list"
 abbr gwa "git worktree add"
 abbr gwr "git worktree remove"
 
-abbr oll "ollama launch pi"
-abbr ollq "ollama launch pi --model qwen3-coder:30b" # main coding
-abbr ollqn "ollama launch pi --model qwen3-coder-next" # main coding next
-abbr olld "ollama launch pi --model deepseek-r1:32b" # reasoning / planning
-abbr oll4 "ollama launch pi --model llama4" # general + fallback
-abbr ollds "ollama launch pi --model devstral-small-2" # local baseline coding
+abbr oll "ollama launch opencode"
+abbr ollc "ollama launch opencode --model qwen3-coder-next" # main coding next
+abbr ollc8 "ollama launch opencode --model qwen3-coder-next:q8_0" # main coding next, 8 bit instead of 4
+abbr ollr "ollama launch opencode --model qwen3.8:27b" # reasoning / planning smaller
+abbr ollre "ollama launch opencode --model gpt-oss:120b" # reasoning / planning
+abbr ollg "ollama launch opencode --model qwen3.6:35b" # general + fallback
 
 abbr genkey "openssl rand -hex 32"
 
