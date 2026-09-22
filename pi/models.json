@@ -6,29 +6,44 @@
       "baseUrl": "http://127.0.0.1:11434/v1",
       "models": [
         {
-          "_launch": true,
-          "contextWindow": 393216,
-          "id": "devstral-small-2",
-          "input": [
-            "text",
-            "image"
-          ]
-        },
-        {
-          "_launch": true,
-          "contextWindow": 262144,
+          "contextWindow": 64000,
           "id": "qwen3-coder-next",
           "input": [
             "text"
           ]
         },
         {
-          "_launch": true,
-          "contextWindow": 262144,
-          "id": "qwen3-coder-next:latest",
+          "contextWindow": 64000,
+          "id": "qwen3-coder-next:q8_0",
           "input": [
             "text"
           ]
+        },
+        {
+          "contextWindow": 64000,
+          "id": "qwen3.8:27b",
+          "input": [
+            "text",
+            "image"
+          ],
+          "reasoning": true
+        },
+        {
+          "contextWindow": 64000,
+          "id": "gpt-oss:120b",
+          "input": [
+            "text"
+          ],
+          "reasoning": true
+        },
+        {
+          "contextWindow": 64000,
+          "id": "qwen3.6:35b",
+          "input": [
+            "text",
+            "image"
+          ],
+          "reasoning": true
         }
       ]
     }
