@@ -16,6 +16,7 @@ alias calc="qalc"
 alias wp="waypipe ssh"
 
 abbr lzg lazygit
+abbr lzj lazyjj
 abbr lzp lazypodman
 abbr ff fastfetch
 
@@ -102,6 +103,28 @@ if status is-interactive
     set -g pure_enable_nixdevshell true
     set -g pure_show_system_time true
     set -g pure_show_jobs true
+
+    # Use jj instead of git in the prompt when inside a jj repo
+    if functions -q _pure_prompt_git; and command -q jj
+        functions -q _pure_prompt_git_original
+        or functions --copy _pure_prompt_git _pure_prompt_git_original
+        function _pure_prompt_git
+            set -l jj_info (command jj log -r @ --no-graph --color never -T 'change_id.shortest(8) ++ "\n" ++ if(!empty, "dirty")' 2>/dev/null)
+            or begin
+                _pure_prompt_git_original
+                return
+            end
+            set -l jj_bookmark (command jj log -r 'heads(::@ & bookmarks())' --no-graph --color never --ignore-working-copy -T 'local_bookmarks.join(" ") ++ " "' 2>/dev/null | string trim)
+            set -l jj_prompt (_pure_set_color $pure_color_git_branch)$jj_info[1]
+            if test -n "$jj_bookmark"
+                set jj_prompt "$jj_prompt $jj_bookmark"
+            end
+            if test -n "$jj_info[2]"
+                set jj_prompt $jj_prompt(_pure_set_color $pure_color_git_dirty)$pure_symbol_git_dirty
+            end
+            echo $jj_prompt
+        end
+    end
 
     fish_vi_key_bindings # Start vi mode
     if functions -q fzf_configure_bindings
