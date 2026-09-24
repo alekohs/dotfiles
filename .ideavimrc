@@ -35,6 +35,14 @@ set relativenumber number
 
 nmap <Leader>w /\u<CR>
 
+" Subword motions (mirrors nvim spider.spec.lua)
+sethandler <A-w> a:vim
+sethandler <A-b> a:vim
+nmap <A-w> <Action>(EditorNextWordInDifferentHumpsMode)
+nmap <A-b> <Action>(EditorPreviousWordInDifferentHumpsMode)
+xmap <A-w> <Action>(EditorNextWordInDifferentHumpsModeWithSelection)
+xmap <A-b> <Action>(EditorPreviousWordInDifferentHumpsModeWithSelection)
+
 " Yank to system clipboard
 nmap <leader>y "+y
 vmap <leader>y "+y

@@ -56,8 +56,7 @@ return {
           { mode = "n", keys = "]b", desc = "Next buffer", postkeys = "]" },
           { mode = "n", keys = "[b", desc = "Previous buffer", postkeys = "[" },
           { mode = "n", keys = "]h", desc = "Next hunk", postkeys = "]" },
-          { mode = "n", keys = "[h", desc = "Prev hunk", postkeys = "[" },
-        },
+          { mode = "n", keys = "[h", desc = "Prev hunk", postkeys = "[" },        },
         window = {
           delay = 500,
         },
