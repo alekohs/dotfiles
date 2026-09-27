@@ -1,19 +1,18 @@
 {
-  "defaultModel": "qwen3-coder-next",
+  "defaultModel": "qwen3-coder-next:q8_0",
   "defaultProvider": "ollama",
   "defaultThinkingLevel": "medium",
   "enableInstallTelemetry": false,
   "httpIdleTimeoutMs": 0,
-  "lastChangelogVersion": "0.78.0",
+  "lastChangelogVersion": "0.87.1",
   "packages": [
     "npm:@ollama/pi-web-search",
     "npm:pi-vim",
     "npm:context-mode",
-    "npm:pi-intercom",
-    "npm:pi-subagents",
-    "npm:pi-prompt-template-model",
-    "npm:@juicesharp/rpiv-todo",
-    "npm:@juicesharp/rpiv-pi",
-    "npm:@juicesharp/rpiv-workflow"
-  ]
+    "npm:pi-intercom"
+  ],
+  "theme": "dark",
+  "terminal": {
+    "showTerminalProgress": true
+  }
 }
