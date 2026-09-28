@@ -1,0 +1,8 @@
+[aliases]
+tug = ["bookmark", "move", "--from", "heads(::@- & bookmarks())", "--to", "@"]
+tug- = ["bookmark", "move", "--from", "heads(::@- & bookmarks())", "--to", "@-"]
+
+diff-summary = ["diff", "--summary", "--no-pager"]
+diff-files = ["diff", "--name-only", "--no-pager"]
+
+log-short= ["log", "--limit", "10"]
