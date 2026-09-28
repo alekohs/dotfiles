@@ -2,6 +2,8 @@
 tug = ["bookmark", "move", "--from", "heads(::@- & bookmarks())", "--to", "@"]
 tug- = ["bookmark", "move", "--from", "heads(::@- & bookmarks())", "--to", "@-"]
 
+mine = ["bookmark", "list", "-r", "mine()"]
+
 diff-summary = ["diff", "--summary", "--no-pager"]
 diff-files = ["diff", "--name-only", "--no-pager"]
 
