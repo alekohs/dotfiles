@@ -10,6 +10,7 @@ diff-files = ["diff", "--name-only", "--no-pager"]
 
 l = ["log", "-r", "stack()"]
 ll = ["log", "-T", "builtin_log_detailed"]
+lr = ["log", "-r", "remote_bookmarks()"]
 o = ["log", "-r", "open()"]
 
 nt = ["new", "trunk()"]
