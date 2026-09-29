@@ -1,14 +1,37 @@
 [aliases]
-tug = ["bookmark", "move", "--from", "heads(::@- & bookmarks())", "--to", "@"]
-tug- = ["bookmark", "move", "--from", "heads(::@- & bookmarks())", "--to", "@-"]
+tug = ["bookmark", "move", "--from", "closest_bookmark(@-)", "--to", "@-"]
+tugn = ["bookmark", "move", "--from", "closest_bookmark(@-)", "--to", "@"]
 
 mine = ["bookmark", "list", "-r", "mine()"]
 
-difft = ["diff", "--tool", "difft"]
+udiff = ["diff", "--config", "ui.diff-formatter=:color-words"]
 diff-summary = ["diff", "--summary", "--no-pager"]
 diff-files = ["diff", "--name-only", "--no-pager"]
 
-log-short= ["log", "--limit", "10"]
+l = ["log", "-r", "stack()"]
+ll = ["log", "-T", "builtin_log_detailed"]
+o = ["log", "-r", "open()"]
+
+nt = ["new", "trunk()"]
+retrunk = ["rebase", "-d", "trunk()"] # rebase the current branch onto the trunk.
+
+# git commands
+f = ["git", "fetch"]
+p = ["git", "push"]
+pc = ["git", "push", "--change", "@-"] # push current cahnges and auto naming the bookmark
+
+oplog = ["op", "log"]
+
+[revset-aliases]
+"closest_bookmark(to)" = "heads(::to & bookmarks())"
+"fork_history(to, from)" = "fork_point(to | from)..@"
+"stack()" = "stack(@)"
+"stack(x)" = "ancestors(reachable(x, mutable()), 2)" # your current branch, root to tip
+"open()" = "trunk()..mine() & mutable()"             # everything you haven't landed
+"wip()" = "open() & ~empty()"
+
+[template-aliases]
+"format_timestamp(timestamp)" = "timestamp.ago()"
 
 [ui]
 diff-formatter = ["difft", "--color=always", "$left", "$right"]
