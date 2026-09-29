@@ -37,7 +37,7 @@ pi: ## Sync pi agent settings, skills and prompts
 brew: ## Install brew packages and casks
 	echo "Installing brew apps"
 	brew install bat bitwarden-cli coreutils eza fastfetch fd \
-	fish fisher fzf imagemagick jq lazydocker lazygit librsvg \
+	fish fisher fzf imagemagick jq jj lazydocker lazygit librsvg \
 	mono-libgdiplus neovim opencode podman \
 	swiftlint telnet tmux tree-sitter-cli xcbeautify \
 	xcode-build-server xcodegen mise difftastic bash
