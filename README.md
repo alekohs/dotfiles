@@ -12,6 +12,15 @@ make copy APP=bat      # copy ~/.config/<APP> back into the repo
 
 After changing fish config: `make fish && source ~/.config/fish/config.fish`.
 
+## Fastfetch
+
+Compact system panel for Linux and macOS, without a logo or Nerd Font requirement.
+
+```sh
+fastfetch --config ./fastfetch/config.jsonc  # preview without changing local config
+make install APP=fastfetch                  # install to ~/.config/fastfetch
+```
+
 ## jj
 
 The repo is colocated with jj (`.git` and `.jj` side by side), so git tools still work. Everything is committed straight to `main`.
