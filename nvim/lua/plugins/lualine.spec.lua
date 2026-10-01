@@ -132,6 +132,11 @@ return {
         return string.format("%d:%d · %d%%%%", line, col, pct)
       end
 
+      local merge_label = {
+        function() return vim.b.merge_label end,
+        cond = function() return vim.b.merge_label ~= nil end,
+      }
+
       require("lualine").setup({
         options = {
           icons_enabled = true,
@@ -208,6 +213,7 @@ return {
         },
 
         winbar = {
+          lualine_a = { merge_label },
           lualine_b = {
             {
               "filename",
@@ -233,6 +239,7 @@ return {
         },
 
         inactive_winbar = {
+          lualine_a = { merge_label },
           lualine_b = {
             {
               "filename",

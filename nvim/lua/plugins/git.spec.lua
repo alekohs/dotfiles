@@ -33,4 +33,16 @@ return {
       },
     },
   },
+  {
+    "sindrets/diffview.nvim",
+    cond = not vim.g.vscode,
+    cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewFileHistory" },
+    opts = {},
+    keys = {
+      { "<leader>gd", "<cmd>DiffviewOpen<cr>", desc = "Diffview open" },
+      { "<leader>gD", "<cmd>DiffviewClose<cr>", desc = "Diffview close" },
+      { "<leader>gF", "<cmd>DiffviewFileHistory %<cr>", desc = "File history" },
+      { "<leader>gH", "<cmd>DiffviewFileHistory<cr>", desc = "Repo history" },
+    },
+  },
 }

@@ -37,3 +37,9 @@ oplog = ["op", "log"]
 
 [ui]
 diff-formatter = ["difft", "--color=always", "$left", "$right"]
+merge-editor = "nvimdiff3"
+
+[merge-tools.nvimdiff3]
+program = "nvim"
+merge-args = ["-d", "$output", "-M", "$left", "$base", "$right", "-c", "wincmd J", "-c", "set modifiable", "-c", "set write"]
+merge-tool-edits-conflict-markers = true

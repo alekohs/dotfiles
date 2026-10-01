@@ -178,3 +178,22 @@ local function comment_newline(above)
 end
 vim.keymap.set("n", "gco", function() comment_newline(false) end, { desc = "Add comment below" })
 vim.keymap.set("n", "gcO", function() comment_newline(true) end, { desc = "Add comment above" })
+
+-- Diff: pick a side in the jj 3-way merge (nvim -d $output -M $left $base $right)
+vim.api.nvim_create_autocmd("VimEnter", {
+  callback = function()
+    if not vim.wo.diff then return end
+    local labels = { "RESULT: edit this, it gets saved", "THEIRS: what you rebased onto", "BASE: before either change", "MINE: your change" }
+    for buf, label in ipairs(labels) do
+      if vim.api.nvim_buf_is_valid(buf) then vim.b[buf].merge_label = label end
+    end
+    local opts = { buffer = 0, silent = true }
+    vim.keymap.set({ "n", "x" }, "<leader>mt", ":diffget 2<CR>", vim.tbl_extend("force", opts, { desc = "Merge: take theirs" }))
+    vim.keymap.set({ "n", "x" }, "<leader>mb", ":diffget 3<CR>", vim.tbl_extend("force", opts, { desc = "Merge: take base" }))
+    vim.keymap.set({ "n", "x" }, "<leader>mm", ":diffget 4<CR>", vim.tbl_extend("force", opts, { desc = "Merge: take mine" }))
+  end,
+})
+
+-- Conflict markers (git and jj both start with <<<<<<<)
+vim.keymap.set("n", "]x", function() vim.fn.search("^<<<<<<<", "W") end, { desc = "Next conflict" })
+vim.keymap.set("n", "[x", function() vim.fn.search("^<<<<<<<", "bW") end, { desc = "Prev conflict" })
