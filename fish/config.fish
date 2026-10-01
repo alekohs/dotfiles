@@ -130,6 +130,8 @@ if status is-interactive
     if functions -q fzf_configure_bindings
         fzf_configure_bindings --git_log=\cl --git_status=\cg --history=\cr --variables=\cv --processes=\cp --directory=\cf
     end
+    bind -M insert ctrl-alt-j _jj_pick_revision
+    bind -M default ctrl-alt-j _jj_pick_revision
 
     # function fish_user_key_bindings
     #   bind \cs "tmux switch-client -t $(tmux ls | fzf | cut -d: -f1)"

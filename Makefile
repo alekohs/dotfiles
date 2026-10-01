@@ -12,6 +12,8 @@ fish: ## Install fish plugins and config
 	cp ./fish/config.fish "${HOME}/.config/fish/config.fish"
 	mkdir -p "${HOME}/.config/fish/functions"
 	rsync -a ./fish/functions/ "${HOME}/.config/fish/functions/"
+	mkdir -p "${HOME}/.config/fish/completions"
+	rsync -a ./fish/completions/ "${HOME}/.config/fish/completions/"
 
 nvim: ## Sync nvim config
 	mkdir -p "${HOME}/.config/nvim"
