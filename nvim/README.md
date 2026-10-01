@@ -32,3 +32,22 @@ clang-format -style=llvm -dump-config > .clang-format
 
 `CMakeLists.txt` is handled by `neocmakelsp`, including formatting — no separate
 formatter needed.
+
+## Markdown preview over SSH
+
+`<leader>mp` starts the browser preview (`markdown-preview.nvim`) on port 8421
+and notifies the URL instead of opening a browser. The server only listens on
+localhost, so forward the port from the machine you connect from:
+
+```
+# ~/.ssh/config
+Host <host>
+  LocalForward 8421 localhost:8421
+```
+
+Then open the notified `http://127.0.0.1:8421/?t=…` locally. The `?t=` token is
+required.
+
+Without a tunnel, set `host = "0.0.0.0"` in `markdown-preview.spec.lua` and open
+`http://<host-ip>:8421/?t=…` from the LAN. The token keeps others out, but the
+traffic is plain HTTP.
