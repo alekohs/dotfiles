@@ -1,18 +1,21 @@
 {
-  "defaultModel": "qwen3-coder-next:q8_0",
-  "defaultProvider": "ollama",
-  "defaultThinkingLevel": "medium",
-  "enableInstallTelemetry": false,
-  "httpIdleTimeoutMs": 0,
-  "lastChangelogVersion": "0.87.1",
-  "packages": [
-    "npm:@ollama/pi-web-search",
-    "npm:pi-vim",
-    "npm:context-mode",
-    "npm:pi-intercom"
-  ],
-  "theme": "dark",
-  "terminal": {
-    "showTerminalProgress": true
-  }
+	"compaction": {
+		"reserveTokens": 39322,
+		"modelOverrides": {
+			"ollama/gpt-oss:120b": {
+				"reserveTokens": 19661
+			}
+		}
+	},
+	"defaultModel": "qwen3-coder-next:q8_0",
+	"defaultProvider": "ollama",
+	"defaultThinkingLevel": "medium",
+	"enableInstallTelemetry": false,
+	"httpIdleTimeoutMs": 0,
+	"lastChangelogVersion": "0.87.1",
+	"packages": ["npm:@ollama/pi-web-search", "npm:pi-vim", "npm:pi-token-speed", "npm:context-mode", "npm:pi-intercom"],
+	"theme": "dark",
+	"terminal": {
+		"showTerminalProgress": true
+	}
 }

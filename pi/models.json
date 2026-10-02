@@ -6,21 +6,21 @@
       "baseUrl": "http://127.0.0.1:11434/v1",
       "models": [
         {
-          "contextWindow": 64000,
+          "contextWindow": 262144,
           "id": "qwen3-coder-next",
           "input": [
             "text"
           ]
         },
         {
-          "contextWindow": 64000,
+          "contextWindow": 262144,
           "id": "qwen3-coder-next:q8_0",
           "input": [
             "text"
           ]
         },
         {
-          "contextWindow": 64000,
+          "contextWindow": 262144,
           "id": "qwen3.8:27b",
           "input": [
             "text",
@@ -29,7 +29,7 @@
           "reasoning": true
         },
         {
-          "contextWindow": 64000,
+          "contextWindow": 131072,
           "id": "gpt-oss:120b",
           "input": [
             "text"
@@ -37,7 +37,7 @@
           "reasoning": true
         },
         {
-          "contextWindow": 64000,
+          "contextWindow": 262144,
           "id": "qwen3.6:35b",
           "input": [
             "text",
