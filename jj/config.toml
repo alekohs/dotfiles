@@ -7,6 +7,7 @@ mine = ["bookmark", "list", "-r", "mine()"]
 udiff = ["diff", "--config", "ui.diff-formatter=:color-words"]
 diff-summary = ["diff", "--summary", "--no-pager"]
 diff-files = ["diff", "--name-only", "--no-pager"]
+idiff = ["diff", "--tool", "difft-inline"]
 
 l = ["log", "-r", "stack()"]
 la = ["log", "-r", "all()"]
@@ -36,10 +37,14 @@ oplog = ["op", "log"]
 "format_timestamp(timestamp)" = "timestamp.ago()"
 
 [ui]
-diff-formatter = ["difft", "--color=always", "$left", "$right"]
+diff-formatter = ["difft", "--color=always", "--width=$width", "$left", "$right"]
 merge-editor = "nvimdiff3"
 
 [merge-tools.nvimdiff3]
 program = "nvim"
 merge-args = ["-d", "$output", "-M", "$left", "$base", "$right", "-c", "wincmd J", "-c", "set modifiable", "-c", "set write"]
 merge-tool-edits-conflict-markers = true
+
+[merge-tools.difft-inline]
+program = "difft"
+diff-args = ["--color=always", "--display=inline", "--width=$width", "$left", "$right"]
