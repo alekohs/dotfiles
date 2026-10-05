@@ -98,35 +98,27 @@ if status is-interactive
     #     set -gx PATH /run/current-system/sw/bin /home/$USER/.nix-profile/bin $PATH
     # end
 
-    # Pure prompt
-    set -g fish_prompt pure
-    set -g pure_enable_nixdevshell true
-    set -g pure_show_system_time true
-    set -g pure_show_jobs true
+    # Prompt (fish_prompt, fish_right_prompt and __ak_* live in functions/)
+    set -g __ak_amber c68f63
+    set -g __ak_ink e8e4de
+    set -g __ak_meta a89f95
+    set -g __ak_dim 6b635a
+    set -g __ak_err d36d69
 
-    # Use jj instead of git in the prompt when inside a jj repo
-    if functions -q _pure_prompt_git; and command -q jj
-        functions -q _pure_prompt_git_original
-        or functions --copy _pure_prompt_git _pure_prompt_git_original
-        function _pure_prompt_git
-            set -l jj_info (command jj log -r @ --no-graph --color never -T 'change_id.shortest(8) ++ "\n" ++ if(!empty, "dirty")' 2>/dev/null)
-            or begin
-                _pure_prompt_git_original
-                return
-            end
-            set -l jj_bookmark (command jj log -r 'heads(::@ & bookmarks())' --no-graph --color never --ignore-working-copy -T 'local_bookmarks.join(" ") ++ " "' 2>/dev/null | string trim)
-            set -l jj_prompt (_pure_set_color $pure_color_git_branch)$jj_info[1]
-            if test -n "$jj_bookmark"
-                set jj_prompt "$jj_prompt $jj_bookmark"
-            end
-            if test -n "$jj_info[2]"
-                set jj_prompt $jj_prompt(_pure_set_color $pure_color_git_dirty)$pure_symbol_git_dirty
-            end
-            echo $jj_prompt
-        end
-    end
-
+    # Key bindings
     fish_vi_key_bindings # Start vi mode
+    set -g fish_cursor_default block
+    set -g fish_cursor_insert line
+    set -g fish_cursor_replace_one underscore
+    set -g fish_cursor_visual block
+    set -g __ak_stale 1
+    set -g __ak_status 0
+    function __ak_repaint --on-variable fish_bind_mode
+        commandline -f repaint
+    end
+    function __ak_postexec --on-event fish_postexec
+        set -g __ak_stale 1
+    end
     if functions -q fzf_configure_bindings
         fzf_configure_bindings --git_log=\cl --git_status=\cg --history=\cr --variables=\cv --processes=\cp --directory=\cf
     end
