@@ -108,7 +108,7 @@ if status is-interactive
     # Key bindings
     fish_vi_key_bindings # Start vi mode
     set -g fish_cursor_default block
-    set -g fish_cursor_insert line
+    set -g fish_cursor_insert block blink
     set -g fish_cursor_replace_one underscore
     set -g fish_cursor_visual block
     set -g __ak_stale 1

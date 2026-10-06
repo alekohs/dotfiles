@@ -26,7 +26,6 @@ window-width = 150
 
 cursor-opacity = 0.9
 cursor-style = block
-cursor-style-blink = false
 
 selection-foreground = #e0e0e4
 selection-background = #3e3e42
