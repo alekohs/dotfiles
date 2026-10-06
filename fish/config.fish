@@ -145,7 +145,7 @@ if status is-interactive
     if test -f "$fzf_opts_file"
         set -gx FZF_DEFAULT_OPTS (cat "$fzf_opts_file")
     else
-        set -gx FZF_DEFAULT_OPTS "--color=fg:8,bg:-1,hl:5 --color=fg+:7,bg+:236,hl+:5 --color=border:8,header:3,gutter:-1 --color=spinner:5,info:4 --color=pointer:4,marker:1,prompt:8 --ansi --border --bind ctrl-j:down,ctrl-k:up --bind enter:accept"
+        set -gx FZF_DEFAULT_OPTS "--color=fg:8,bg:-1,hl:5 --color=fg+:7,bg+:0,hl+:5 --color=border:8,header:3,gutter:-1 --color=spinner:5,info:4 --color=pointer:4,marker:1,prompt:8 --ansi --border --bind ctrl-j:down,ctrl-k:up --bind enter:accept"
     end
 
     # Tmux functions

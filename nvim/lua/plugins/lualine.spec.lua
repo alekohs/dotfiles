@@ -11,18 +11,51 @@ return {
         ["rose-pine"] = function()
           local p = require("rose-pine.palette")
           return {
-            base = p.base, text = p.text, muted = p.muted,
-            accent_n = p.rose, accent_i = p.foam, accent_v = p.iris,
-            accent_r = p.pine, accent_c = p.love, accent_t = p.pine,
-            info = p.foam, warn = p.gold, love = p.love,
+            base = p.base,
+            text = p.text,
+            muted = p.muted,
+            accent_n = p.rose,
+            accent_i = p.foam,
+            accent_v = p.iris,
+            accent_r = p.pine,
+            accent_c = p.love,
+            accent_t = p.pine,
+            info = p.foam,
+            warn = p.gold,
+            love = p.love,
           }
         end,
         ["vague"] = function()
           return {
-            base = "#141415", text = "#cdcdcd", muted = "#606079",
-            accent_n = "#be8c8c", accent_i = "#b4d4cf", accent_v = "#bb9dbd",
-            accent_r = "#7894ab", accent_c = "#d8647e", accent_t = "#7894ab",
-            info = "#b4d4cf", warn = "#f3be7c", love = "#d8647e",
+            base = "#141415",
+            text = "#cdcdcd",
+            muted = "#606079",
+            accent_n = "#be8c8c",
+            accent_i = "#b4d4cf",
+            accent_v = "#bb9dbd",
+            accent_r = "#7894ab",
+            accent_c = "#d8647e",
+            accent_t = "#7894ab",
+            info = "#b4d4cf",
+            warn = "#f3be7c",
+            love = "#d8647e",
+          }
+        end,
+        ["polarskal"] = function()
+          local p = vim.g.polarskal_palette
+          return {
+            base = p.panel,
+            text = p.text,
+            muted = p.muted,
+            accent_n = p.accent,
+            accent_i = p.ice,
+            accent_v = p.alt,
+            accent_r = p.err,
+            accent_c = p.warn,
+            accent_t = p.focus,
+            info = p.ice,
+            warn = p.warn,
+            love = p.err,
           }
         end,
       }
@@ -75,9 +108,7 @@ return {
         return (palettes[scheme] or palettes["rose-pine"])()
       end
 
-      local function project_name()
-        return vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
-      end
+      local function project_name() return vim.fn.fnamemodify(vim.fn.getcwd(), ":t") end
 
       local function lsp_clients()
         local clients = vim.lsp.get_clients({ bufnr = 0 })
@@ -101,9 +132,7 @@ return {
       local lsp_spinner = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
       local lsp_spin_i = 0
       local lsp_progress_msg = ""
-      local function lsp_progress()
-        return lsp_progress_msg
-      end
+      local function lsp_progress() return lsp_progress_msg end
 
       local function selection_count()
         local mode = vim.fn.mode()
@@ -172,7 +201,14 @@ return {
           lualine_a = { "mode" },
           lualine_b = {
             { "branch", icon = "" },
-            { "diff", symbols = { added = helpers.icons.git.added .. " ", modified = helpers.icons.git.modified .. " ", removed = helpers.icons.git.removed .. " " } },
+            {
+              "diff",
+              symbols = {
+                added = helpers.icons.git.added .. " ",
+                modified = helpers.icons.git.modified .. " ",
+                removed = helpers.icons.git.removed .. " ",
+              },
+            },
           },
           lualine_c = {
             { project_name, icon = "" },
@@ -228,9 +264,9 @@ return {
               sources = { "nvim_lsp" },
               symbols = {
                 error = helpers.icons.diagnostics.error .. " ",
-                warn  = helpers.icons.diagnostics.warn  .. " ",
-                hint  = helpers.icons.diagnostics.hint  .. " ",
-                info  = helpers.icons.diagnostics.info  .. " ",
+                warn = helpers.icons.diagnostics.warn .. " ",
+                hint = helpers.icons.diagnostics.hint .. " ",
+                info = helpers.icons.diagnostics.info .. " ",
               },
             },
           },

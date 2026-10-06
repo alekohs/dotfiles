@@ -10,7 +10,9 @@ if os.getenv("NVIM_TTY") then
   vim.cmd("highlight clear")
 else
   vim.cmd("set background=dark")
-  vim.cmd("colorscheme rose-pine")
+  if not pcall(vim.cmd.colorscheme, "polarskal") then
+    vim.cmd("colorscheme rose-pine")
+  end
 
   -- Clear background colors so the terminal background shows through
   local clear_bg_groups = {
