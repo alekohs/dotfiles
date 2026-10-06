@@ -48,3 +48,6 @@ merge-tool-edits-conflict-markers = true
 [merge-tools.difft-inline]
 program = "difft"
 diff-args = ["--color=always", "--display=inline", "--width=$width", "$left", "$right"]
+
+[lazyjj]
+highlight-color = "black"

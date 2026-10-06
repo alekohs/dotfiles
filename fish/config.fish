@@ -99,11 +99,11 @@ if status is-interactive
     # end
 
     # Prompt (fish_prompt, fish_right_prompt and __ak_* live in functions/)
-    set -g __ak_amber c68f63
-    set -g __ak_ink e8e4de
-    set -g __ak_meta a89f95
-    set -g __ak_dim 6b635a
-    set -g __ak_err d36d69
+    set -g __ak_amber yellow
+    set -g __ak_ink normal
+    set -g __ak_meta white
+    set -g __ak_dim brblack
+    set -g __ak_err red
 
     # Key bindings
     fish_vi_key_bindings # Start vi mode
