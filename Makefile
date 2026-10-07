@@ -19,10 +19,11 @@ nvim: ## Sync nvim config
 	mkdir -p "${HOME}/.config/nvim"
 	rsync -a --delete ./nvim/ "${HOME}/.config/nvim/"
 
-claude: ## Sync Claude Code instructions and skills
-	mkdir -p "${HOME}/.claude/skills" "${HOME}/.claude/skills"
+claude: ## Sync Claude Code instructions, skills and subagents
+	mkdir -p "${HOME}/.claude/skills" "${HOME}/.claude/agents"
 	rsync -a claude/CLAUDE.md "${HOME}/.claude/CLAUDE.md"
 	rsync -a claude/skills/ "${HOME}/.claude/skills/"
+	rsync -a --include='/*.md' --exclude='*' claude/agents/ "${HOME}/.claude/agents/"
 
 opencode: ## Sync opencode config, reusing Claude instructions and skills
 	mkdir -p "${HOME}/.config/opencode"
