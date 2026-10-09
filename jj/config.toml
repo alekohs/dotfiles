@@ -23,6 +23,12 @@ f = ["git", "fetch"]
 p = ["git", "push"]
 pc = ["git", "push", "--change", "@-"] # push current cahnges and auto naming the bookmark
 
+# workspaces
+w = ["workspace"]
+wa = ["workspace", "add"]
+wf = ["workspace", "forget"]
+wl = ["workspace", "list"]
+
 oplog = ["op", "log"]
 
 [revset-aliases]
