@@ -15,8 +15,6 @@ return {
     "WhoIsSethDaniel/mason-tool-installer.nvim",
     opts = {
       ensure_installed = {
-        "jq",
-
         -- LSP
         "bash-language-server",
         { "clangd", condition = function() return vim.fn.executable("clangd") == 0 end },
@@ -38,6 +36,7 @@ return {
         "python-lsp-server",
         { "sqls", condition = function() return vim.fn.executable("go") == 1 end },
         "qmlls",
+        { "zls", condition = function() return vim.fn.executable("zig") == 1 end },
         { "roslyn", condition = function() return vim.fn.executable("dotnet") == 1 end },
         { "powershell-editor-services", condition = function() return vim.fn.executable("pwsh") == 1 end },
 

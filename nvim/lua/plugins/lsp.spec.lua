@@ -188,6 +188,7 @@ return {
         "ts_ls",
         "vimls",
         "yamlls",
+        "zls"
       })
 
       vim.diagnostic.config({
