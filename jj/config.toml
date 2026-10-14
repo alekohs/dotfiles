@@ -20,8 +20,9 @@ diff-files = ["diff", "--name-only", "--no-pager"]
 idiff = ["diff", "--tool", "difft-inline"]
 
 l = ["log", "-r", "stack()"]
+ls = ["log", "-r", "stack()", "--summary"]
 la = ["log", "-r", "all()"]
-ll = ["log", "-T", "builtin_log_detailed"]
+ll = ["log", "-T", "builtin_log_detailed", "--summary"]
 lr = ["log", "-r", "remote_bookmarks()"]
 o = ["log", "-r", "open()"]
 
