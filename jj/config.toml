@@ -9,6 +9,10 @@ sign-on-push = true
 
 # COMMON
 [aliases]
+bl = ["bookmark", "list"]
+bc = ["bookmark", "create"]
+bd = ["bookmark", "delete"]
+
 tug = ["bookmark", "move", "--from", "closest_bookmark(@-)", "--to", "@-"]
 tugn = ["bookmark", "move", "--from", "closest_bookmark(@-)", "--to", "@"]
 
