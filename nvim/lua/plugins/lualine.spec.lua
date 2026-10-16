@@ -1,7 +1,7 @@
 return {
   {
     "nvim-lualine/lualine.nvim",
-    cond = not vim.g.vscode,
+    cond = not vim.g.vscode and not vim.g.nvim_merge,
     event = "VeryLazy",
     dependencies = {
       "echasnovski/mini.nvim",
@@ -161,11 +161,6 @@ return {
         return string.format("%d:%d · %d%%%%", line, col, pct)
       end
 
-      local merge_label = {
-        function() return vim.b.merge_label end,
-        cond = function() return vim.b.merge_label ~= nil end,
-      }
-
       require("lualine").setup({
         options = {
           icons_enabled = true,
@@ -249,7 +244,7 @@ return {
         },
 
         winbar = {
-          lualine_a = { merge_label },
+          lualine_a = {},
           lualine_b = {
             {
               "filename",
@@ -275,7 +270,7 @@ return {
         },
 
         inactive_winbar = {
-          lualine_a = { merge_label },
+          lualine_a = {},
           lualine_b = {
             {
               "filename",

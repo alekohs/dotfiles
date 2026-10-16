@@ -1,15 +1,15 @@
 [merge]
-    tool = vimdiff
+    tool = nvimdiff3
     conflictstyle = diff3
 [mergetool]
     keepBackup = false
-[mergetool "vimdiff"]
-    trustExitCode = false
-    layout = LOCAL,BASE,REMOTE / MERGED
+[mergetool "nvimdiff3"]
+    cmd = "nvim --cmd 'let g:nvim_merge = 1' -d \"$MERGED\" -M \"$LOCAL\" \"$BASE\" \"$REMOTE\" -c \"lua require('config.merge').setup()\""
+    trustExitCode = true
 [core]
     excludesfile = ~/.gitignore_global
 [init]
-  defaultBranch = main
+    defaultBranch = main
 [gpg]
     format = ssh
 [commit]

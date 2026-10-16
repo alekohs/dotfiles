@@ -63,8 +63,9 @@ merge-editor = "nvimdiff3"
 
 [merge-tools.nvimdiff3]
 program = "nvim"
-merge-args = ["-d", "$output", "-M", "$left", "$base", "$right", "-c", "wincmd J", "-c", "set modifiable", "-c", "set write"]
+merge-args = ["--cmd", "let g:nvim_merge = 1", "-d", "$output", "-M", "$left", "$base", "$right", "-c", "lua require('config.merge').setup()"]
 merge-tool-edits-conflict-markers = true
+conflict-marker-style = "git"
 
 [merge-tools.difft-inline]
 program = "difft"

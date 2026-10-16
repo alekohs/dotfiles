@@ -1,5 +1,6 @@
 return {
   "selimacerbas/markdown-preview.nvim",
+  cond = not vim.g.nvim_merge and not vim.wo.diff,
   dependencies = { "selimacerbas/live-server.nvim" },
   cmd = { "MarkdownPreview", "MarkdownPreviewStop", "MarkdownPreviewRefresh" },
   keys = {

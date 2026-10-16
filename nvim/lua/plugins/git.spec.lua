@@ -1,7 +1,7 @@
 return {
   {
     "lewis6991/gitsigns.nvim",
-    cond = not vim.g.vscode,
+    cond = not vim.g.vscode and not vim.g.nvim_merge,
     event = { "BufReadPre", "BufNewFile" },
     opts = {
       current_line_blame = true,

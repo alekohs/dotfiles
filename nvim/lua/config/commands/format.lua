@@ -13,6 +13,7 @@ autocmd("FileType", {
 autocmd("BufWritePre", {
   pattern = "*",
   callback = function(args)
+    if vim.b[args.buf].merge_label then return end
     require("conform").format({
       bufnr = args.buf,
       lsp_fallback = true,

@@ -44,6 +44,7 @@ return {
           { mode = { "n", "x" }, keys = "<Leader>g", desc = "+git" },
           { mode = { "n", "x" }, keys = "<Leader>gh", desc = "+hunks" },
           { mode = { "n", "x" }, keys = "<Leader>h", desc = "+harpoon" },
+          { mode = vim.g.nvim_merge and { "n", "x" } or "n", keys = "<Leader>m", desc = vim.g.nvim_merge and "+merge" or "+markdown" },
           { mode = { "n", "x" }, keys = "<Leader>o", desc = "+oil" },
           { mode = { "n", "x" }, keys = "<Leader>q", desc = "+quit/session" },
           { mode = { "n", "x" }, keys = "<Leader>s", desc = "+search" },
