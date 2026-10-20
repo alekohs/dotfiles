@@ -9,6 +9,18 @@ sign-on-push = true
 
 # COMMON
 [aliases]
+describe-from = [
+  "util",
+  "exec",
+  "--",
+  "fish",
+  "-c",
+  '''
+  set -l base main
+  set -q argv[2]; and set base $argv[2]
+  jj describe -m (jj log -r "$base..$argv[1]" --reversed --no-graph -T 'if(description, "- " ++ description.first_line() ++ "\n")' | string collect)
+  ''',
+]
 bl = ["bookmark", "list"]
 bc = ["bookmark", "create"]
 bd = ["bookmark", "delete"]
@@ -32,12 +44,21 @@ lr = ["log", "-r", "remote_bookmarks()"]
 o = ["log", "-r", "open()"]
 
 nt = ["new", "trunk()"]
-retrunk = ["rebase", "-d", "trunk()"] # rebase the current branch onto the trunk.
+retrunk = [
+  "rebase",
+  "-d",
+  "trunk()",
+] # rebase the current branch onto the trunk.
 
 # git commands
 f = ["git", "fetch"]
 p = ["git", "push"]
-pc = ["git", "push", "--change", "@-"] # push current cahnges and auto naming the bookmark
+pc = [
+  "git",
+  "push",
+  "--change",
+  "@-",
+] # push current cahnges and auto naming the bookmark
 
 # workspaces
 w = ["workspace"]
@@ -51,26 +72,49 @@ oplog = ["op", "log"]
 "closest_bookmark(to)" = "heads(::to & bookmarks())"
 "fork_history(to, from)" = "fork_point(to | from)..@"
 "stack()" = "stack(@)"
-"stack(x)" = "ancestors(reachable(x, mutable()), 2)" # your current branch, root to tip
-"open()" = "trunk()..mine() & mutable()"             # everything you haven't landed
+"stack(x)" = "ancestors(reachable(x, mutable()), 2)"  # your current branch, root to tip
+"open()" = "trunk()..mine() & mutable()"              # everything you haven't landed
 "wip()" = "open() & ~empty()"
 
 [template-aliases]
 "format_timestamp(timestamp)" = "timestamp.ago()"
 
 [ui]
-diff-formatter = ["difft", "--color=always", "--width=$width", "$left", "$right"]
+diff-formatter = [
+  "difft",
+  "--color=always",
+  "--width=$width",
+  "$left",
+  "$right",
+]
 merge-editor = "nvimdiff3"
 
 [merge-tools.nvimdiff3]
 program = "nvim"
-merge-args = ["--cmd", "let g:nvim_merge = 1", "-d", "$output", "-M", "$left", "$base", "$right", "-c", "lua require('config.merge').setup()"]
+merge-args = [
+  "--cmd",
+  "let g:nvim_merge = 1",
+  "-d",
+  "$output",
+  "-M",
+  "$left",
+  "$base",
+  "$right",
+  "-c",
+  "lua require('config.merge').setup()",
+]
 merge-tool-edits-conflict-markers = true
 conflict-marker-style = "git"
 
 [merge-tools.difft-inline]
 program = "difft"
-diff-args = ["--color=always", "--display=inline", "--width=$width", "$left", "$right"]
+diff-args = [
+  "--color=always",
+  "--display=inline",
+  "--width=$width",
+  "$left",
+  "$right",
+]
 
 [lazyjj]
 highlight-color = "black"

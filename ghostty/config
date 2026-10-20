@@ -34,6 +34,8 @@ selection-background = #3e3e42
 keybind = alt+left=unbind
 keybind = alt+right=unbind
 
+keybind = ctrl+enter=unbind # Unbind fullscreen
+
 # Copy/paste with super key
 keybind = super+c=copy_to_clipboard
 keybind = super+v=paste_from_clipboard
