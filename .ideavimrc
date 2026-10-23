@@ -2,7 +2,7 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'machakann/vim-highlightedyank'
 Plug 'terryma/vim-multiple-cursors'
-Plug 'easymotion/vim-easymotion'
+" Plug 'easymotion/vim-easymotion'
 Plug 'preservim/nerdtree'
 
 let mapleader = ' '
@@ -25,6 +25,9 @@ set surround
 set multiple-cursors
 set ReplaceWithRegister
 set commentary
+set mini-ai
+set argtextobj
+set textobj-entire
 
 set easymotion
 set notimeout
@@ -106,6 +109,17 @@ augroup END
 nmap gsd ds
 nmap gsr cs
 nmap gsa ys
+xmap gsa S
+
+" surround find right/left (mini.surround gsf/gsF)
+for c in ['(', ')', 'b', '[', ']', '{', '}', 'B', '<', '>', 't']
+    execute 'nnoremap gsf' . c . ' va' . c . '<Esc>'
+    execute 'nnoremap gsF' . c . ' va' . c . 'o<Esc>'
+endfor
+for c in ['"', "'", '`', 'q']
+    execute 'nnoremap gsf' . c . ' vi' . c . '<Esc>l'
+    execute 'nnoremap gsF' . c . ' vi' . c . 'o<Esc>h'
+endfor
 
 " multiple cursors
 nmap <A-n> <Plug>NextWholeOccurrence
@@ -144,6 +158,8 @@ nmap gy <Action>(GotoTypeDeclaration)
 nmap gr <Action>(FindUsages)
 nmap K <Action>(QuickJavaDoc)
 nmap <leader>cl <Action>(ShowErrorDescription)
+nmap ]d <Action>(GotoNextError)
+nmap [d <Action>(GotoPreviousError)
 nmap <leader>gK <Action>(ParameterInfo)
 imap <C-k> <Action>(ParameterInfo)
 nmap <leader>cS <Action>(GotoSymbol)
@@ -191,10 +207,20 @@ map <Leader>sv <action>(com.mituuz.fuzzier.FuzzierVCS)
 map <Leader>sg <action>(com.mituuz.fuzzier.FuzzyGrep)
 
 " search
-map <leader><space> <Action>(SearchEverywhere)
+map <leader><space> <Action>(GotoFile)
+map <leader>/ <Action>(FindInPath)
+map <leader>fb <Action>(RecentFiles)
+map <leader>fr <Action>(RecentFiles)
 map <leader>fs <Action>(SearchEverywhere)
 map <leader>fv <Action>(StructureViewPopupMenu)
+xmap <leader>fv <Action>(FindInPath)
 map <leader>cs <Action>(FileStructurePopup)
+
+" git (mirrors nvim git.spec.lua)
+nmap ]h <Action>(VcsShowNextChangeMarker)
+nmap [h <Action>(VcsShowPrevChangeMarker)
+nmap <leader>ghr <Action>(Vcs.RollbackChangedLines)
+nmap <leader>gb <Action>(Annotate)
 
 " debugger
 map <leader>5 <Action>(Debug)
