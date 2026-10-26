@@ -40,7 +40,7 @@ keybind = ctrl+enter=unbind
 # Copy/paste with super key
 keybind = super+c=copy_to_clipboard
 keybind = super+v=paste_from_clipboard
-keybind = shift+enter=text:\x1b\r
+keybind = shift+enter=csi:13;2u
 keybind = alt+backspace=text:\x1b\x7f
 keybind = ctrl+backspace=csi:127;5u
 
