@@ -1,6 +1,6 @@
 alias fzfp="fzf --preview 'bat --color=always {}' --preview-window '~5' --height 50% --layout=reverse --prompt 'Files> ' --bind 'ctrl-r:reload:rg --files --hidden --glob \"!.git/*\"'"
 alias t="kokoarch-tmux-session"
-alias ls="eza --icons"
+alias ls="eza --icons auto"
 alias ll="ls --long"
 alias lla="ll -a"
 alias tree="ls --tree"
