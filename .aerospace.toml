@@ -1,0 +1,170 @@
+start-at-login = false
+accordion-padding = 30
+default-root-container-layout = 'tiles'
+default-root-container-orientation = 'auto'
+
+# Skip cmd+h in macos
+automatically-unhide-macos-hidden-apps = true
+
+[key-mapping]
+preset = 'qwerty'
+
+[gaps]
+inner.horizontal = [{ monitor."built-in.*" = 4 }, 12]
+inner.vertical = [{ monitor."built-in.*" = 4 }, 12]
+outer.left = [{ monitor."built-in.*" = 4 }, 12]
+outer.bottom = [{ monitor."built-in.*" = 4 }, 12]
+outer.top = [{ monitor."built-in.*" = 4 }, 12]
+outer.right = [{ monitor."built-in.*" = 4 }, 12]
+
+[mode.main.binding]
+alt-ctrl-y = 'layout tiles horizontal vertical'
+alt-ctrl-u = 'layout floating tiling'
+alt-ctrl-f = 'fullscreen'
+
+alt-ctrl-h = 'focus left'
+alt-ctrl-j = 'focus down'
+alt-ctrl-k = 'focus up'
+alt-ctrl-l = 'focus right'
+
+alt-ctrl-shift-h = 'move left'
+alt-ctrl-shift-j = 'move down'
+alt-ctrl-shift-k = 'move up'
+alt-ctrl-shift-l = 'move right'
+
+alt-ctrl-shift-minus = 'resize smart -50'
+alt-ctrl-shift-equal = 'resize smart +50'
+
+alt-ctrl-1 = 'workspace 1'
+alt-ctrl-2 = 'workspace 2'
+alt-ctrl-3 = 'workspace 3'
+alt-ctrl-4 = 'workspace 4'
+alt-ctrl-5 = 'workspace 5'
+alt-ctrl-6 = 'workspace 6'
+alt-ctrl-7 = 'workspace 7'
+alt-ctrl-8 = 'workspace 8'
+alt-ctrl-9 = 'workspace 9'
+
+alt-ctrl-shift-1 = 'exec-and-forget aerospace move-node-to-workspace --focus-follows-window 1' # && sketchybar --trigger space_windows_change'
+alt-ctrl-shift-2 = 'exec-and-forget aerospace move-node-to-workspace --focus-follows-window 2' # && sketchybar --trigger space_windows_change'
+alt-ctrl-shift-3 = 'exec-and-forget aerospace move-node-to-workspace --focus-follows-window 3' # && sketchybar --trigger space_windows_change'
+alt-ctrl-shift-4 = 'exec-and-forget aerospace move-node-to-workspace --focus-follows-window 4' # && sketchybar --trigger space_windows_change'
+alt-ctrl-shift-5 = 'exec-and-forget aerospace move-node-to-workspace --focus-follows-window 5' # && sketchybar --trigger space_windows_change'
+alt-ctrl-shift-6 = 'exec-and-forget aerospace move-node-to-workspace --focus-follows-window 6' # && sketchybar --trigger space_windows_change'
+alt-ctrl-shift-7 = 'exec-and-forget aerospace move-node-to-workspace --focus-follows-window 7' # && sketchybar --trigger space_windows_change'
+alt-ctrl-shift-8 = 'exec-and-forget aerospace move-node-to-workspace --focus-follows-window 8'
+alt-ctrl-shift-9 = 'exec-and-forget aerospace move-node-to-workspace --focus-follows-window 9'
+
+alt-ctrl-tab = 'workspace-back-and-forth'
+alt-ctrl-shift-tab = 'move-workspace-to-monitor --wrap-around next'
+
+alt-ctrl-shift-semicolon = 'mode service'
+# ctrl-alt-ctrl-shift-r = 'exec-and-forget sketchybar --reload'
+
+[mode.service.binding]
+esc = [
+  'reload-config',
+  'mode main',
+  # 'exec-and-forget sketchybar --reload',
+  'exec-and-forget borders active_color=0xffe1e3e4 inactive_color=0xff494d64 width=2.0',
+  # 'exec-and-forget sleep 0.5 && sketchybar --trigger send_message MESSAGE="Aerospace Reloaded"',
+]
+
+r = ['flatten-workspace-tree', 'mode main'] # reset layout
+f = [
+  'layout floating tiling',
+  'mode main',
+] # Toggle between floating and tiling layout
+backspace = ['close-all-windows-but-current', 'mode main']
+
+alt-ctrl-shift-h = ['join-with left', 'mode main']
+alt-ctrl-shift-j = ['join-with down', 'mode main']
+alt-ctrl-shift-k = ['join-with up', 'mode main']
+alt-ctrl-shift-l = ['join-with right', 'mode main']
+
+[workspace-to-monitor-force-assignment]
+1 = ['main', 'built-in']
+2 = ['main', 'built-in']
+3 = ['main', 'built-in']
+4 = ['main', 'built-in']
+5 = ['main', 'built-in']
+6 = ['built-in', 'main']
+7 = ['built-in', 'main']
+8 = ['built-in', 'main']
+9 = ['built-in', 'main']
+
+# Float if nothing is specified
+[[on-window-detected]]
+check-further-callbacks = true
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.fortinet.forticlient.vpn'
+check-further-callbacks = false
+run = 'move-node-to-workspace --focus-follows-window 6'
+
+[[on-window-detected]]
+if.app-id = 'com.electron.dockerdesktop'
+check-further-callbacks = false
+run = 'move-node-to-workspace --focus-follows-window 6'
+
+[[on-window-detected]]
+if.app-id = 'com.mitchellh.ghostty'
+check-further-callbacks = false
+run = ['layout tiling', 'move-node-to-workspace --focus-follows-window 1']
+
+# multi
+[[on-window-detected]]
+if.app-id = 'com.apple.dt.Xmulti'
+check-further-callbacks = false
+run = ['layout tiling', 'move-node-to-workspace 3']
+
+[[on-window-detected]]
+if.app-name-regex-substring = '(rider|intellij)'
+check-further-callbacks = true
+run = 'move-node-to-workspace 3'
+
+[[on-window-detected]]
+if.app-name-regex-substring = '(rider|datagrip|intellij)'
+if.window-title-regex-substring = '(developer|Developer)'
+check-further-callbacks = false
+run = ['layout tiling', 'move-node-to-workspace 3']
+
+[[on-window-detected]]
+if.app-id = 'com.microsoft.VSmulti'
+check-further-callbacks = false
+run = ['layout tiling', 'move-node-to-workspace 3']
+
+[[on-window-detected]]
+if.app-id = 'com.vmware.fusion'
+if.window-title-regex-substring = 'general'
+check-further-callbacks = false
+run = 'layout floating'
+
+# Web
+[[on-window-detected]]
+if.app-name-regex-substring = '(chrome|edgemac|firefox)'
+if.window-title-regex-substring = '^(?!DevTools).*$'
+check-further-callbacks = false
+run = ['layout tiling', 'move-node-to-workspace 2']
+
+# Social
+[[on-window-detected]]
+if.app-id = 'com.microsoft.teams2'
+check-further-callbacks = true
+run = ['move-node-to-workspace 4']
+
+[[on-window-detected]]
+if.app-name-regex-substring = '(discord|slackmacgap)'
+check-further-callbacks = false
+run = ['layout tiling', 'move-node-to-workspace 5']
+
+# Mail and music
+[[on-window-detected]]
+if.app-id = 'com.spotify.client'
+check-further-callbacks = false
+run = ['layout tiling', 'move-node-to-workspace 6']
+
+[[on-window-detected]]
+if.app-name-regex-substring = '(mail|iCal|Outlook)'
+run = ['layout floating', 'move-node-to-workspace 4']

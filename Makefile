@@ -62,3 +62,11 @@ install: ## Copy APP=<folder> to ~/.config
 copy: ## Copy ~/.config/APP=<folder> into repo
 	mkdir -p "./$(APP)"
 	rsync -a "${HOME}/.config/$(APP)/" ./$(APP)/
+
+configure-mac: brew ## Install and configure mac for the first time
+	@echo 'Copy aerospace'
+	@cp .aerospace.toml ~/.aerospace.toml
+	@mkdir -p ~/Library/Application\ Support/Rectangle
+
+	@echo 'Copy rectangle'
+	@cp rectangle/RectangleConfig.json ~/Library/Application\ Support/Rectangle/
