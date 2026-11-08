@@ -44,4 +44,4 @@ jj git fetch           # pull in remote changes
 jj rebase -d main      # rebase onto updated main
 ```
 
-`tug` comes from LazyJJ (`~/.config/jj/conf.d`). Git tools show "detached HEAD" while jj manages the repo, that's expected.
+`tug` is an alias in `jj/config.toml`. It only moves `main` if `main` is an ancestor of `@-`; if it says "No bookmarks to update", run `jj git fetch && jj rebase -s @- -d main` first. Git tools show "detached HEAD" while jj manages the repo, that's expected.

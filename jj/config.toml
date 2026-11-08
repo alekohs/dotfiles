@@ -4,9 +4,6 @@ behavior = "own"
 backend = "ssh"
 key = ""
 
-[git]
-sign-on-push = true
-
 # COMMON
 [aliases]
 describe-from = [
@@ -69,6 +66,7 @@ wl = ["workspace", "list"]
 opl = ["op", "log"]
 
 [revsets]
+git-sign-on-push = "~signed() & mine()"
 log ="builtin_log() | ancestors(trunk(), 10)"
 
 [revset-aliases]
