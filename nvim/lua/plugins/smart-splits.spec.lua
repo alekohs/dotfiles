@@ -1,11 +1,18 @@
+local utils = require("helpers.utils")
+
 return {
-  "mrjones2014/smart-splits.nvim",
+  "smart-splits-nvim/smart-splits.nvim",
+  version = "^3.0.0",
   lazy = false,
   dependencies = {
     { "smart-splits-nvim/backend-tmux", main = "smart-splits-backend-tmux" },
+    { "rawnly/smart-splits-backend-rex", cond = utils.is_rex, opts = {} },
   },
   opts = {
-    mux = { backend = "smart-splits-backend-tmux" },
+    mux = {
+      backend = utils.is_rex and { "smart-splits-backend-tmux", "smart-splits-backend-rex" }
+        or "smart-splits-backend-tmux",
+    },
   },
   keys = {
     { "<C-h>", function() require("smart-splits").move_cursor_left() end, desc = "Move to left split/pane" },

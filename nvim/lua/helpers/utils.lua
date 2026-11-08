@@ -3,6 +3,9 @@ local M = {}
 -- Use ssh for lazy.nvim
 M.lazy_use_ssh = vim.fn.getenv("NVIM_PLUGINS_SSH") == "1"
 
+-- Check if is rex session
+M.is_rex = vim.env.TERM_PROGRAM == "rex" or vim.env.REX_SESSION ~= nil
+
 --- Combine two or more tables
 --- @return table table Combine mulitple tables
 function M.combine_tables(...)
