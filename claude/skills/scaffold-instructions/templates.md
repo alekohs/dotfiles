@@ -7,6 +7,120 @@ layer was opted in.
 
 ---
 
+# Docs-first shape
+
+The default shape. Constitution files (CONSTITUTION.md, instructions/,
+CONTEXT.md, plan/, specs/) are not generated.
+
+## CLAUDE.md (docs-first)
+
+```markdown
+# <Repo>
+
+<One short paragraph: what it is, the stack, and how it relates to
+neighbouring systems.>
+
+<Key doc>, rationale, open items: [docs/<key-doc>.md](docs/<key-doc>.md).
+Read it before architectural work.
+
+**`docs/` is the source of truth.** `research/` holds spikes and <design>
+input only. When they disagree, `docs/` wins. Record decisions in `docs/`,
+not in `research/`.
+
+## Rules that can't be broken
+
+- **<Invariant as one declarative sentence.>** <Optional second sentence
+  naming the real type/key/table.> (`docs/<doc>.md` §N)
+- **<Invariant with a boundary that needs detail.>**
+  - <sub-rule naming real code: `Type.Method`, `Config:Key`, `409 REASON_CODE`>
+  - <"A new <endpoint/loop> that <does X> must <call Y>.">
+  - **One exception (YYYY-MM-DD): <name>** (`docs/<doc>.md` §N, "<section>").
+    `<OnlyAllowedSite>` is the only other <writer/caller>, <exact conditions>.
+    `<Guard>` holds it to exactly that shape. Don't widen this to <...>.
+- **No new dependencies without explicit approval.** Approved: <Pkg>,
+  <Pkg> (<what for>, YYYY-MM-DD), ... The full list is in
+  `docs/<doc>.md` §N.
+- **Time comes from the injected `<clock abstraction>`.**
+- **<UI language rule, if any>.**
+```
+
+Build/run commands live in README.md, not CLAUDE.md.
+
+## docs/design/README.md
+
+```markdown
+# <Repo> — Design Plan
+
+<Two sentences: what it replaces/does. Pointers to the other top-level docs.
+"`docs/` is the source of truth; `../../research/` holds only <...>.">
+
+| Part | File | Status |
+|---|---|---|
+| <Part> | [<file>.md](<file>.md) | Draft |
+
+## What kind of system this is
+
+<For non-technical readers. Bold one-line qualities with two–three plain
+bullets each. No jargon.>
+
+## Core principles
+
+Each principle is stated here once. The links point to the details.
+
+### <Theme>
+
+1. **<Principle.>** <One–three sentences.> [<doc> §N](<doc>.md#anchor)
+```
+
+Every design doc opens with `**Status:** <Draft|Agreed>, YYYY-MM-DD.` and
+ends with an `## N. Open questions` (or "Still open") section.
+
+## research/README.md
+
+```markdown
+# Research
+
+Background material. **[`../docs/`](../docs/) is what has been decided and
+what gets built.** Where anything here disagrees with `docs/`, `docs/` wins.
+Everything decided here has been carried into `docs/`. Material whose
+screens are built has been removed; it is in git history.
+
+| What | Why it is kept |
+|---|---|
+| [`spikes/`](spikes/) | <which spike is evidence for which doc section> |
+
+New spikes go in `spikes/`, named `YYYY-MM-DD-topic.md`. Their conclusions
+only count once they are written into `docs/`.
+```
+
+## provenance/README.md *(optional)*
+
+```markdown
+# Provenance
+
+Where the code in this repository comes from. Kept in the repository; not
+shipped.
+
+- **Clean-room subsystems** are implemented from primary sources (RFCs,
+  standards, papers) or first principles. Each has an entry below with its
+  approach, sources and last-audited date.
+- **Derived code** gets `derived/<project>.md` with a file-by-file mapping,
+  plus `THIRD_PARTY_LICENSES/<project>/` shipped with releases.
+- **Dependencies** are listed with licences in `../docs/<doc>.md` §N.
+
+| Subsystem | Code | Kind | Last audited |
+|---|---|---|---|
+| [<name>](<name>.md) | `src/<path>/` | Clean-room | YYYY-MM-DD |
+```
+
+Each entry file: `**Code:**`, `**Kind:**`, `**Last audited:**` header, then
+`## Approach`, `## Primary sources`, and (if any) `## Test corpus` stating
+what was *not* copied and why (licence).
+
+---
+
+# Constitution shape
+
 ## CONSTITUTION.md
 
 ```markdown
@@ -34,9 +148,9 @@ lives in the linked files.>
 → [NN-topic.md](instructions/NN-topic.md)
 
 <Repeat for each article. 4–6 articles total. Typical set: scope-of-
-assistance or security posture, truthfulness, deny-by-default or
-tokens-are-the-design-system, consistency or quality bar, governance of
-assistance (optional), amendments (optional).>
+assistance or security posture, truthfulness, a domain-specific principle,
+consistency or quality bar, governance of assistance (optional),
+amendments (optional).>
 
 ### Article <N> — Amendments *(optional — repos with tiers/review gates)*
 
@@ -186,8 +300,7 @@ For engineering repos.
 # NN — <Topic>
 
 <If git history motivated this file, open with it: "The bug this file
-prevents has already shipped: commit `<sha>` … Two incidents in four months
-is the definition of a policy gap.">
+prevents has already shipped: commit `<sha>` …">
 
 ## <Domain section>
 
