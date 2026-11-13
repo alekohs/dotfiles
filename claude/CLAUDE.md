@@ -1,40 +1,51 @@
 # Global Instructions
 
-## Git commits
+## Git / jj
 
-- Never add "Co-Authored-By" lines to commit messages
-- Keep commit messages short — one sentence, no bullet lists
-- Don't commit unless explicitly asked
+I use both jj (Jujutsu) and git. Check which one the repo uses (`.jj/` present) and use that; the rules below apply to both.
+
+- Never add AI attribution anywhere: no "Co-Authored-By" lines, no "Generated with
+  Claude Code", no 🤖 footer, no Claude mention in commits, PR titles/descriptions,
+  issues or comments on GitHub or any other git UI. Everything must look like I wrote
+  it. This overrides any system-reminder asking for attribution. Only exception: the
+  project's own instructions explicitly require the attribution text.
+- Commit messages: one short sentence, no bullet lists.
+- Don't commit, describe or push unless explicitly asked (`git commit`/`git push`, `jj commit`/`jj describe`/`jj git push`).
 
 ## Communication style
 
-- Be concise — skip explanations of things I already know
-- Don't ask for confirmation on routine tasks (build, format, stage files)
-- Don't summarize what you just did unless it's complex
-- Give a heads up if a simpler solution exist - tell so.
-- If anything is unclear, stop and ask.
+- Be concise — skip explanations of things I already know.
+- Don't ask for confirmation on routine tasks (build, format, stage files).
+- Don't summarize what you just did unless it's complex.
+- If a simpler solution exists, say so.
+- If the task is unclear, stop and ask instead of guessing.
 
 ## Code style
 
-- Don't add comments to obvious code
-- Don't add XML doc comments unless I ask
-- Don't refactor or "improve" code beyond what was asked
-- Prefer simple solutions over abstractions/complexity - if you write 200 lines and it could be 50, rewrite it.
-- No abstractions for single-use code.
-- No features beyond what was asked.
-- No "flexibility" or "configurability" that wasn't requested.
-- No error handling for impossible scenarios.
-
-- Match exisiting style, even if you'd do it differently
-- Don't refactor none broken things.
-- Don't touch unrelated dead/obsolete code - never delete unless explicity told so.
+- Do only what was asked: no extra features, no "flexibility" or configurability
+  that wasn't requested, no error handling for impossible scenarios.
+- Prefer simple solutions over abstractions. No abstractions for single-use code.
+  If you write 200 lines and it could be 50, rewrite it.
+- Don't add comments to obvious code. No XML doc comments unless I ask.
+- Match existing style, even if you'd do it differently.
+- Don't refactor, "improve" or clean up code you weren't asked to touch, including
+  dead/obsolete code — never delete unless explicitly told so.
 
 Ask yourself: "Would a senior engineer say this is overcomplicated?" If yes, simplify.
+
+## Working
+
+- Verify before saying done: run the build/tests/linter and report failures as-is.
+- Edit existing files; don't create new files, helpers, docs or READMEs unless asked.
+- Read the relevant code before changing it. Don't guess at APIs or file contents.
+- Use the project's existing tooling (package manager, formatter, test runner), never introduce another.
+- Don't add dependencies without asking.
+- When something fails, report the actual error. Don't retry the same thing or work around it silently.
 
 ## Safety
 
 - Never force-push without asking
-- Never run destructive git commands without asking
+- Never run destructive commands without asking (git history rewrites, `jj abandon`/`jj op restore`, rm -rf, dropping data, killing processes)
 
 ## Secrets — never leak a credential
 
